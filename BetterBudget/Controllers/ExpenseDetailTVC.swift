@@ -12,7 +12,6 @@ import CloudKit
 
 class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, NSFetchedResultsControllerDelegate {
     @IBOutlet var table: UITableView!
-    
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var amountTextField: UITextField!
     @IBOutlet weak var dateTextField: PickerBasedTextField!
@@ -41,11 +40,11 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        //        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
-
         
-//        doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: nil)
+        
+        //        doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: nil)
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // Problem: The date picker and the repeats picker are both resetting after the detailTVC loads. So, when the viewWillDisappear, the function saveExpense() gets called, and then overwrites the previous data with an empty string for picker and current date for date in the database.
@@ -133,7 +132,12 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
     }
     
     @objc func donePicker() {
-        notesTextView.becomeFirstResponder()
+        if dateTextField.isFirstResponder {
+            dateTextField.resignFirstResponder()
+        }
+        if repeatsPickerTextField.isFirstResponder {
+            repeatsPickerTextField.resignFirstResponder()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -141,23 +145,25 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
         
     }
     
-//    func textField(_ textField: UITextField,
-//                   shouldChangeCharactersIn range: NSRange,
-//                   replacementString string: String) -> Bool {
-//        return false
-//    }
-
-//    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        tableView.setEditing(true, animated: true)
-//    }
+    //    func textField(_ textField: UITextField,
+    //                   shouldChangeCharactersIn range: NSRange,
+    //                   replacementString string: String) -> Bool {
+    //        return false
+    //    }
+    
+    //    func textFieldDidBeginEditing(_ textField: UITextField) {
+    //        tableView.setEditing(true, animated: true)
+    //    }
     
     override func viewWillDisappear(_ animated: Bool) {
-
+        
     }
     // MARK: - Editing
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         
+//        titleTextField.isUserInteractionEnabled = false
+       
         // before calling super.setEditing to recognize the switch to Done, resign the first responder if needed and make sure the title is valid.
         
         if !editing {
@@ -216,10 +222,16 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
         super.setEditing(editing, animated: false)
         
         //Update the UI based on the editing state.
+        // All fields are locked with isUserInteractionEnabled set to false in the storyboard, until super.setEditing is called, then we set it to true.
+        titleTextField.isUserInteractionEnabled = true
         titleTextField.isEnabled = editing
+        amountTextField.isUserInteractionEnabled = true
         amountTextField.isEnabled = editing
+        dateTextField.isUserInteractionEnabled = true
         dateTextField.isEnabled = editing
+        repeatsPickerTextField.isUserInteractionEnabled = true
         repeatsPickerTextField.isEnabled = editing
+        notesTextView.isUserInteractionEnabled = true
         notesTextView.isEditable = editing
         
         //If the UI is entering the editing state, simply return
@@ -304,10 +316,6 @@ extension ExpenseDetailTVC {
                 return //Put a Warning Alert
             }
         }
-//        delegate?.didUpdateExpense(expense, shouldReloadRow: true)
-// Double check line below... code smell, and it's addint another item because it's .addExpense. Needs an .updatesExpense
-//        dataProvider.addExpense(in: dataProvider.persistentContainer.viewContext) { expense in
-
     }
 }
 

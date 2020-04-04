@@ -15,7 +15,7 @@ class ExpenseProvider {
     private weak var fetchedResultsControllerDelegate: NSFetchedResultsControllerDelegate?
     
     //Date formatter for recording the timestamp in the default post title
-    //Change this so that it's a basic bill title of 'New Bill', and basic amount of '$0.00'
+    
     private lazy var mediumTimeFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "DD"
@@ -51,12 +51,12 @@ class ExpenseProvider {
     func addExpense(in context: NSManagedObjectContext, shouldSave: Bool = true, completionHandler: ((_ newExpense: Expense) -> Void)? = nil) {
         context.perform {
             let expense = Expense(context: context)
-            expense.title = "Untitled"
-        
+            expense.title = "New Expense"
+            
             if shouldSave {
                 context.save(with: .addExpense)
             }
-        completionHandler?(expense)
+            completionHandler?(expense)
         }
         
     }
