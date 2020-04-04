@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2811176924355DFB0031CC37 /* PersistentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2811176824355DFB0031CC37 /* PersistentModel.swift */; };
 		2811176B24355EC00031CC37 /* AddExpenseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2811176A24355EC00031CC37 /* AddExpenseModel.swift */; };
 		2813DA8E2427F60D00B0FC18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2813DA8D2427F60D00B0FC18 /* AppDelegate.swift */; };
 		2813DA902427F60D00B0FC18 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2813DA8F2427F60D00B0FC18 /* SceneDelegate.swift */; };
@@ -54,7 +53,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2811176824355DFB0031CC37 /* PersistentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentModel.swift; sourceTree = "<group>"; };
 		2811176A24355EC00031CC37 /* AddExpenseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseModel.swift; sourceTree = "<group>"; };
 		2813DA8A2427F60D00B0FC18 /* BetterBudget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BetterBudget.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2813DA8D2427F60D00B0FC18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -175,10 +173,9 @@
 		2813DAC9242823E000B0FC18 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				28DD1A4624350BCC00EAB3EF /* Extensions */,
 				2813DA962427F60D00B0FC18 /* BetterBudget.xcdatamodeld */,
-				2811176824355DFB0031CC37 /* PersistentModel.swift */,
 				2811176A24355EC00031CC37 /* AddExpenseModel.swift */,
+				28DD1A4624350BCC00EAB3EF /* Extensions */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -397,7 +394,6 @@
 				286CB4B42431336800F63053 /* CoreDataStack.swift in Sources */,
 				2842908D243749BB0034D1F3 /* CoreDataManager.swift in Sources */,
 				286CB4B024312AB200F63053 /* CoreData+Convenience.swift in Sources */,
-				2811176924355DFB0031CC37 /* PersistentModel.swift in Sources */,
 				2813DA982427F60D00B0FC18 /* BetterBudget.xcdatamodeld in Sources */,
 				287278C6242B157B00CA1717 /* UnusedCode.swift in Sources */,
 				2813DA902427F60D00B0FC18 /* SceneDelegate.swift in Sources */,

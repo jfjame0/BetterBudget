@@ -46,3 +46,25 @@ class CoreDataManager {
     }
     
 }
+
+extension CoreDataManager {
+    
+    static func saveExpenseEntity(title: String?, amount: Double?, dueDate: Date?, repeats: String?, notes: String?) {
+        
+        let expense = Expense(context: managedContext)
+        let context = expense.managedObjectContext!
+        
+        context.performAndWait {
+            if let title = title,
+                let amount = amount {
+                expense.title = title
+                expense.amount = Double(amount)
+                expense.dueDate = dueDate
+                expense.repeats = repeats
+                expense.notes = notes
+            } else {
+                return //Put a Warning Alert
+            }
+        }
+    }
+}

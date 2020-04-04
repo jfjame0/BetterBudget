@@ -204,7 +204,7 @@
                             <outlet property="delegate" destination="g8t-pb-pZt" id="PJw-Wc-fVw"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Edit" id="eoh-Td-sWK"/>
+                    <navigationItem key="navigationItem" id="eoh-Td-sWK"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="amountTextField" destination="XUX-fE-qpK" id="vgg-3J-KvT"/>

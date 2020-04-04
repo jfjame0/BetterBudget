@@ -6,7 +6,7 @@
 //  Copyright © 2020 JOHN JAMES III. All rights reserved.
 //
 
-/*
+
 import Foundation
 
 class AddExpenseModel {
@@ -18,4 +18,4 @@ class AddExpenseModel {
     var title: String?
     var expenseIndex = 0
 }
-*/
+

@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import CloudKit
 
-class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, NSFetchedResultsControllerDelegate {
     @IBOutlet var table: UITableView!
     
     @IBOutlet weak var titleTextField: UITextField!
@@ -19,6 +19,13 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
     @IBOutlet weak var repeatsPickerTextField: PickerBasedTextField!
     @IBOutlet weak var notesTextView: UITextView!
     weak var delegate: ExpenseInteractionDelegate?
+    
+    private lazy var dataProvider: ExpenseProvider = {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let provider = ExpenseProvider(with: appDelegate!.coreDataStack.persistentContainer,
+                                       fetchedResultsControllerDelegate: self)
+        return provider
+    }()
     
     var expense: Expense?
     let dueDatePickerSelection = UIDatePicker()
@@ -145,7 +152,7 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
 //    }
     
     override func viewWillDisappear(_ animated: Bool) {
-//        saveExpense()
+
     }
     // MARK: - Editing
     
@@ -216,13 +223,24 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
         notesTextView.isEditable = editing
         
         //If the UI is entering the editing state, simply return
-        guard !editing, let expense = expense else { return }
+        guard !isEditing, let expense = expense else { return }
         
-        saveExpense()
+        let context = expense.managedObjectContext!
         
-        delegate?.didUpdateExpense(expense, shouldReloadRow: true)
+        context.performAndWait {
+            if let title = titleTextField.text,
+                let amount = amountTextField.text {
+                expense.title = title
+                expense.amount = Double(amount)!
+                expense.dueDate = capturedDate
+                expense.repeats = capturedPickerData
+                expense.notes = notesTextView.text
+                context.save(with: .updateExpense)
+            } else {
+                return //Put a Warning Alert
+            }
+        }
     }
-    
 }
 
 //MARK: - TableView Data Source & TableView Delegate Methods
@@ -243,14 +261,13 @@ extension ExpenseDetailTVC {
         navigationItem.rightBarButtonItem?.isEnabled = expense == nil ? false : true
         //Title
         titleTextField.text = expense?.title ?? ""
-        
         //Amount
         if let amount = expense?.amount {
             amountTextField.text = String(amount)
         } else {
             amountTextField.text = ""
         }
-        
+        //Date
         if let currentDueDate = expense?.dueDate {
             let formatter = DateFormatter()
             formatter.dateStyle = .short
@@ -258,11 +275,11 @@ extension ExpenseDetailTVC {
         } else {
             dateTextField.text = ""
         }
-        
+        //Repeats
         repeatsPickerTextField.text = expense?.repeats ?? "None"
-        
+        //Notes
         notesTextView.text = expense?.notes ?? ""
-        
+        tableView.reloadData()
     }
 }
 
@@ -282,60 +299,15 @@ extension ExpenseDetailTVC {
                 expense.dueDate = capturedDate
                 expense.repeats = capturedPickerData
                 expense.notes = notesTextView.text
+                context.save(with: .updateExpense)
             } else {
                 return //Put a Warning Alert
             }
         }
-        delegate?.didUpdateExpense(expense, shouldReloadRow: true)
-    
-    /*
-         //Move this to new AddExpenseTVC
-         
-        @IBAction func addExpense(_ sender: UIBarButtonItem) {
-            dataProvider.addExpense(in: dataProvider.persistentContainer.viewContext) { expense in
-                self.didUpdateExpense(expense)
-                self.resetAndReload(select: expense)
-            }
-        }
-    */
-        
-    }
-}
-/*
+//        delegate?.didUpdateExpense(expense, shouldReloadRow: true)
+// Double check line below... code smell, and it's addint another item because it's .addExpense. Needs an .updatesExpense
+//        dataProvider.addExpense(in: dataProvider.persistentContainer.viewContext) { expense in
 
-extension ExpenseDetailTVC {
-    
-    @IBInspectable var doneAccessory: Bool {
-        get{
-            return self.doneAccessory
-        }
-        set (hasDone) {
-            if hasDone {
-                addDoneButtonOnKeyboard()
-            }
-        }
     }
-    
-    func addDoneButtonOnKeyboard() {
-        
-        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
-        doneToolbar.barStyle = .default
-        
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.doneButtonAction))
-        
-        let items = [flexSpace, done]
-        doneToolbar.items = items
-        doneToolbar.sizeToFit()
-        
-        self.inputAccessoryView = doneToolbar
-    }
-    
-    func doneButtonAction() {
-        self.resignFirstResponder()
-    }
-    
-    
 }
-*/
 

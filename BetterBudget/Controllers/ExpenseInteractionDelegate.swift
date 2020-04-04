@@ -14,8 +14,8 @@ protocol ExpenseInteractionDelegate: class {
     //When deleting an expense, pass nil for expense
     
     func didUpdateExpense(_ expense: Expense?, shouldReloadRow: Bool)
-    
 
+    
     //Call this method so that the ExpensesTVC has a chance to build up the connection.
     func willShowExpenseDetailTVC(_ controller: ExpenseDetailTVC)
 }
