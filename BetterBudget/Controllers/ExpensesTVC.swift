@@ -31,19 +31,23 @@ class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 88
         
-        // Observe .didFinishRelevantTransactions to updated the UI if needed.
+        // Observe .didFinishRelevantTransactions to update the UI if needed.
         NotificationCenter.default.addObserver(
             self, selector: #selector(type(of: self).didFindRelevantTransactions(_:)),
             name: .didFindRelevantTransactions, object: nil)
         
-        // Select the first row if any, and update the detail view.
+        
+        tableView.reloadData()
         didUpdateExpense(nil)
+        
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
+        
+        
     }
     
     //MARK: - Set Editing
@@ -56,8 +60,8 @@ class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         
         if !editing {
             tableView.reloadData()
-            self.didUpdateExpense(nil)
-            tableView.refreshControl?.beginRefreshing()
+            didUpdateExpense(nil)
+            
         }
         
     }
@@ -75,6 +79,12 @@ class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
             expenseDetailVC.expense = expense
         }
     }
+    
+    // MARK: - NSFetchedResultsControllerDelegate
+
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+    }
 }
     
     // MARK: - Table view DataSource and Delegate
@@ -82,29 +92,22 @@ class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
 extension ExpensesTVC {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return dataProvider.fetchedResultsController.fetchedObjects?.count ?? 0
     }
-    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExpensesListCell", for: indexPath)
         
         let expense = dataProvider.fetchedResultsController.object(at: indexPath)
-        // Set Text Label
         cell.textLabel?.text = expense.title
-        // Set Detail Text Label
         cell.detailTextLabel?.text = String(expense.amount)
-//        cell.detailTextLabel?.text = String(itemArray[indexPath.row].amount)
         return cell
     }
-    
-    // Override to support conditional editing of the table view.
+
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
         
@@ -192,7 +195,7 @@ extension ExpensesTVC {
             let viewContext = dataProvider.persistentContainer.viewContext
             NSManagedObjectContext.mergeChanges(fromRemoteContextSave: userInfo, into: [viewContext])
         }
-        self.didUpdateExpense(expense)
+        didUpdateExpense(expense)
     }
     
     private func resetAndReload(select expense: Expense?) {
