@@ -19,3 +19,7 @@ class AddExpenseModel {
     var expenseIndex = 0
 }
 
+enum ExpenseType {
+    case expense
+    
+}

@@ -41,67 +41,15 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
     override func viewDidLoad() {
         super.viewDidLoad()
         //        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-        
-        
-        
-        //        doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: nil)
+
         self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        // Problem: The date picker and the repeats picker are both resetting after the detailTVC loads. So, when the viewWillDisappear, the function saveExpense() gets called, and then overwrites the previous data with an empty string for picker and current date for date in the database.
-        // Change it so only if the user edits a field, the edit button changes to the 'done' button.
-        //When the done button is pressed, saveExpense() is called.
+        self.navigationItem.title = expense?.title
         
         refreshUI()
         
-        if titleTextField.isSelected {
-            tableView.setEditing(true, animated: true)
-        }
-        
-        //datePicker in line
-        datePicker.datePickerMode = .date
-        dateTextField.inputView = datePicker
-        datePicker.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: .valueChanged)
-        dateTextField.delegate = self
-        
-        let toolBar2 = UIToolbar()
-        toolBar2.barStyle = UIBarStyle.default
-        toolBar2.isTranslucent = true
-        toolBar2.tintColor = UIColor.green
-        toolBar2.sizeToFit()
-        
-        let doneButton2 = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.plain, target: self, action: #selector(ExpenseDetailTVC.donePicker))
-        
-        let spaceButton2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-        toolBar2.setItems([spaceButton2, spaceButton2, doneButton2], animated: false)
-        toolBar2.isUserInteractionEnabled = true
-        dateTextField.inputAccessoryView = toolBar2
-        
-        //Repeats picker
-        
-        let frame = self.view.frame
-        let repeatsFrame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: 216)
-        repeatsSelection = UIPickerView(frame: repeatsFrame)
-        repeatsSelection.dataSource = self
-        repeatsSelection.delegate = self
-        repeatsPickerTextField.inputView = repeatsSelection
-        repeatsPickerTextField.delegate = self
-        
-        // possibly enter the directionField config
-        
-        let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.default
-        toolBar.isTranslucent = true
-        toolBar.tintColor = UIColor.green
-        toolBar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.plain, target: self, action: #selector(ExpenseDetailTVC.donePicker))
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-        toolBar.setItems([spaceButton, spaceButton, doneButton], animated: false)
-        toolBar.isUserInteractionEnabled = true
-        repeatsPickerTextField.inputAccessoryView = toolBar
-        
     } 
     
+    //Date Picker
     @objc public func datePickerValueChanged(sender: UIDatePicker) {
         
         let dateFormatter: DateFormatter = DateFormatter()
@@ -110,6 +58,7 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
         capturedDate = sender.date
         dateTextField.text = dateFormatter.string(from: sender.date)
     }
+    
     // Repeats Picker
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -125,12 +74,11 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
     
     //Capture the picker view selection
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let repeatsSelection = repeatsPickerData[row]
-        capturedPickerData = repeatsSelection
-        repeatsPickerTextField.text = capturedPickerData
-        
+            let repeatsSelection = repeatsPickerData[row]
+            capturedPickerData = repeatsSelection
+            repeatsPickerTextField.text = capturedPickerData
     }
-    
+    //Date Picker && Repeats Picker
     @objc func donePicker() {
         if dateTextField.isFirstResponder {
             dateTextField.resignFirstResponder()
@@ -145,24 +93,12 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
         
     }
     
-    //    func textField(_ textField: UITextField,
-    //                   shouldChangeCharactersIn range: NSRange,
-    //                   replacementString string: String) -> Bool {
-    //        return false
-    //    }
-    
-    //    func textFieldDidBeginEditing(_ textField: UITextField) {
-    //        tableView.setEditing(true, animated: true)
-    //    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         
     }
     // MARK: - Editing
     
     override func setEditing(_ editing: Bool, animated: Bool) {
-        
-//        titleTextField.isUserInteractionEnabled = false
        
         // before calling super.setEditing to recognize the switch to Done, resign the first responder if needed and make sure the title is valid.
         
@@ -234,6 +170,49 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
         notesTextView.isUserInteractionEnabled = true
         notesTextView.isEditable = editing
         
+        //datePicker in line
+        datePicker.datePickerMode = .date
+        dateTextField.inputView = datePicker
+        datePicker.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: .valueChanged)
+        dateTextField.delegate = self
+        
+        let toolBar2 = UIToolbar()
+        toolBar2.barStyle = UIBarStyle.default
+        toolBar2.isTranslucent = true
+        toolBar2.tintColor = UIColor.green
+        toolBar2.sizeToFit()
+        
+        let doneButton2 = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.plain, target: self, action: #selector(ExpenseDetailTVC.donePicker))
+        
+        let spaceButton2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        toolBar2.setItems([spaceButton2, spaceButton2, doneButton2], animated: false)
+        toolBar2.isUserInteractionEnabled = true
+        dateTextField.inputAccessoryView = toolBar2
+        
+        //Repeats picker
+        
+        let frame = self.view.frame
+        let repeatsFrame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: 216)
+        repeatsSelection = UIPickerView(frame: repeatsFrame)
+        repeatsSelection.dataSource = self
+        repeatsSelection.delegate = self
+        repeatsPickerTextField.inputView = repeatsSelection
+        repeatsPickerTextField.delegate = self
+        
+        // possibly enter the directionField config
+        
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = UIColor.green
+        toolBar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.plain, target: self, action: #selector(ExpenseDetailTVC.donePicker))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        toolBar.setItems([spaceButton, spaceButton, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        repeatsPickerTextField.inputAccessoryView = toolBar
+   
         //If the UI is entering the editing state, simply return
         guard !isEditing, let expense = expense else { return }
         
@@ -249,6 +228,11 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
                 expense.notes = notesTextView.text
                 context.save(with: .updateExpense)
             } else {
+                let alert = UIAlertController(title: "Error",
+                                              message: "Something went wrong. The expense didn't save. Try again.",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                present(alert, animated: true)
                 return //Put a Warning Alert
             }
         }
@@ -275,7 +259,15 @@ extension ExpenseDetailTVC {
         titleTextField.text = expense?.title ?? ""
         //Amount
         if let amount = expense?.amount {
-            amountTextField.text = String(amount)
+        //MARK: - Number Formatter
+            let formatter = NumberFormatter()
+            formatter.minimumFractionDigits = 0
+            formatter.maximumFractionDigits = 2
+            formatter.numberStyle = .currency
+            formatter.locale = .current
+            
+            amountTextField.text = String("\(formatter.string(from: NSNumber(value: amount))!)")
+//            amountTextField.text = String(amount)
         } else {
             amountTextField.text = ""
         }

@@ -11,7 +11,7 @@ import CoreData
 import CloudKit
 
 class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
-
+    
     weak var expensesTVC: ExpensesTVC?
     weak var expenseDetailTVC: ExpenseDetailTVC?
     
@@ -23,7 +23,7 @@ class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     }()
     
     //MARK: - View Controller life cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = editButtonItem
@@ -81,14 +81,14 @@ class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     }
     
     // MARK: - NSFetchedResultsControllerDelegate
-
+    
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
     }
 }
-    
-    // MARK: - Table view DataSource and Delegate
-    
+
+// MARK: - Table view DataSource and Delegate
+
 extension ExpensesTVC {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -104,10 +104,21 @@ extension ExpensesTVC {
         
         let expense = dataProvider.fetchedResultsController.object(at: indexPath)
         cell.textLabel?.text = expense.title
-        cell.detailTextLabel?.text = String(expense.amount)
+        
+        
+        let formatter = NumberFormatter()
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 2
+        formatter.numberStyle = .currency
+        formatter.locale = .current
+        // MARK: - Need to add space between the $ & amount - Refer to extension in Number+Extensions.swift
+        // Needs to look like this: $ 55 and not $55
+        cell.detailTextLabel?.text = String("\(formatter.string(from: NSNumber(value: expense.amount))!)")
+//        cell.detailTextLabel?.text = expense.amount.customNumberPresenter(for: .expense, formatting: true)
+        
         return cell
     }
-
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
         
@@ -131,7 +142,7 @@ extension ExpensesTVC {
             return
         }
         
-        // Check if the current selected post is delted or updated.
+        // Check if the current selected post is deleted or updated.
         // If not, and the user isn't editing it, merge the changes silently; otherwise, alert the user and go back to the main view
         var isSelectedExpenseChanged = false
         var changeType: NSPersistentHistoryChangeType?
@@ -278,17 +289,13 @@ extension ExpensesTVC: ExpenseInteractionDelegate {
 //MARK: - Action Handlers
 
 extension ExpensesTVC {
-    
+    //MARK: - addExpense needs to create the new expense, and then open that expense in ExpenseDetailTVC.
     @IBAction func addExpense(_ sender: UIBarButtonItem) {
         dataProvider.addExpense(in: dataProvider.persistentContainer.viewContext) { expense in
             self.didUpdateExpense(expense)
             self.resetAndReload(select: expense)
-            
         }
-        //Redo this so that it segue's to a new addExpenseTVC, and from there, put the code for the dataProvider.addExpense
-        //You were trying to do too much on one view controller.
         
-        //Get rid of the split view controller, and just use the tab bar controller.
     }
     
 }
