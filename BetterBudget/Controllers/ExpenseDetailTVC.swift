@@ -110,7 +110,7 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
             dateTextField.resignFirstResponder()
         }
         
-        self.view.endEditing(true)
+//        self.view.endEditing(true)
     }
     
     // Repeats Picker
@@ -154,13 +154,23 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
         
         // before calling super.setEditing to recognize the switch to Done, resign the first responder if needed and make sure the title is valid.
         
-        //Call super's implementation to switch the status to editing.
-        super.setEditing(editing, animated: true)
-        
-        //Update the UI based on the editing state.
-        // All fields are locked with isUserInteractionEnabled set to false in the storyboard, until super.setEditing is called, then we set it to true.
-        
         if !editing {
+            
+            if titleTextField.isFirstResponder {
+                titleTextField.resignFirstResponder()
+            }
+            if amountTextField.isFirstResponder {
+                amountTextField.resignFirstResponder()
+            }
+            if notesTextView.isFirstResponder {
+                notesTextView.resignFirstResponder()
+            }
+            if dateTextField.isFirstResponder {
+                dateTextField.resignFirstResponder()
+            }
+            if repeatsPickerTextField.isFirstResponder {
+                repeatsPickerTextField.resignFirstResponder()
+            }
             
             if let title = titleTextField.text, title.isEmpty {
                 let alert = UIAlertController(title: "Warning",
@@ -197,7 +207,23 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
             }
             
         }
-
+        
+        //Call super's implementation to switch the status to editing.
+        super.setEditing(editing, animated: false)
+        
+        //Update the UI based on the editing state.
+        // All fields are locked with isUserInteractionEnabled set to false in the storyboard, until super.setEditing is called, then we set it to true.
+        titleTextField.isUserInteractionEnabled = true
+        titleTextField.isEnabled = editing
+        amountTextField.isUserInteractionEnabled = true
+        amountTextField.isEnabled = editing
+        notesTextView.isUserInteractionEnabled = true
+        notesTextView.isEditable = editing
+        dateTextField.isUserInteractionEnabled = true
+        dateTextField.isEnabled = editing
+        repeatsPickerTextField.isUserInteractionEnabled = true
+        repeatsPickerTextField.isEnabled = editing
+        
         //If the UI is entering the editing state, simply return
         guard !isEditing, let expense = expense else { return }
         
@@ -276,3 +302,36 @@ extension ExpenseDetailTVC {
     }
 }
 
+extension ExpenseDetailTVC {
+    
+    func saveExpense() {
+        //If the UI is entering the editing state, simply return
+        guard !isEditing, let expense = expense else { return }
+        
+        //MARK: - Save Context
+        let context = expense.managedObjectContext!
+        
+        context.performAndWait {
+            if let title = titleTextField.text,
+                let amount = amountTextField.text {
+                expense.title = title
+                expense.amount = Double(amount)!
+                expense.dueDate = datePicker.date
+                
+                let selectedRow = repeatsSelection.selectedRow(inComponent: 0)
+                expense.repeats = repeatsPickerData[selectedRow]
+                
+                expense.notes = notesTextView.text
+                context.save(with: .updateExpense)
+            } else {
+                let alert = UIAlertController(title: "Error",
+                                              message: "Something went wrong. The expense didn't save. Try again.",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                present(alert, animated: true)
+                return
+            }
+        }
+    }
+    
+}

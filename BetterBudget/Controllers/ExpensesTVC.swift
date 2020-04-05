@@ -43,6 +43,12 @@ class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         
     }
     
+    @IBAction func refreshControlValueChanged(_ sender: UIRefreshControl) {
+        tableView.reloadData()
+        sender.endRefreshing()
+    }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
@@ -241,15 +247,15 @@ extension ExpensesTVC: ExpenseInteractionDelegate {
         }
         
         //Update the ExpensesTVC: make sure the row is visible and the content is up-to-date.
-        if let indexPath = indexPath {
-            if shouldReloadRow {
-                tableView.reloadRows(at: [indexPath], with: .none)
-            }
-            if let isCollapsed = splitViewController?.isCollapsed, !isCollapsed {
-                tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-            }
-            tableView.scrollToRow(at: indexPath, at: .none, animated: true)
-        }
+//        if let indexPath = indexPath {
+//            if shouldReloadRow {
+//                tableView.reloadRows(at: [indexPath], with: .none)
+//            }
+//            if let isCollapsed = splitViewController?.isCollapsed, !isCollapsed {
+//                tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+//            }
+//            tableView.scrollToRow(at: indexPath, at: .none, animated: true)
+//        }
         
         //Update the ExpenseDetailTVC if needed
         //shouldReloadRow is true when the change was made in the ExpenseDetailTVC, so no need to update.

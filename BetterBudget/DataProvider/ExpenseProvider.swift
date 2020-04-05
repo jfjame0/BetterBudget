@@ -51,7 +51,7 @@ class ExpenseProvider {
     func addExpense(in context: NSManagedObjectContext, shouldSave: Bool = true, completionHandler: ((_ newExpense: Expense) -> Void)? = nil) {
         context.perform {
             let expense = Expense(context: context)
-            expense.title = "New Expense"
+            expense.title = "* New Expense *"
             
             if shouldSave {
                 context.save(with: .addExpense)
