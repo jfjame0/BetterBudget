@@ -14,9 +14,13 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
     @IBOutlet var table: UITableView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var amountTextField: UITextField!
-    @IBOutlet weak var dateTextField: PickerBasedTextField!
-    @IBOutlet weak var repeatsPickerTextField: PickerBasedTextField!
+    @IBOutlet weak var dateTextField: UITextField!
+    @IBOutlet weak var repeatsPickerTextField: UITextField!
     @IBOutlet weak var notesTextView: UITextView!
+    //TODO: - Add a prefix label in interfacebuilder, in the amountCell that holds a currency symbol:
+    //    prefixLabel.text = "+" + NSLocale.defaultCurrency
+    //    prefixLabel.textColor = UIColor.green
+    
     weak var delegate: ExpenseInteractionDelegate?
     
     private lazy var dataProvider: ExpenseProvider = {
@@ -33,15 +37,14 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
     var capturedDate: Date = Date()
     var capturedPickerData: String = String()
     var doneButton: UIBarButtonItem = UIBarButtonItem()
-    
     var repeatsPickerData: [String] = ["None", "Weekly", "2 Weeks", "Monthly", "2 Months", "6 Months", "Yearly"]
     
     //MARK: - AddExpenseTVC Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-
+                print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         self.navigationItem.title = expense?.title
         
@@ -50,14 +53,14 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
     } 
     
     //Date Picker
-    @objc public func datePickerValueChanged(sender: UIDatePicker) {
-        
-        let dateFormatter: DateFormatter = DateFormatter()
-        dateFormatter.dateStyle = DateFormatter.Style.medium
-        dateFormatter.timeStyle = DateFormatter.Style.none
-        capturedDate = sender.date
-        dateTextField.text = dateFormatter.string(from: sender.date)
-    }
+//    @objc public func datePickerValueChanged(sender: UIDatePicker) {
+//
+//        let dateFormatter: DateFormatter = DateFormatter()
+//        dateFormatter.dateStyle = DateFormatter.Style.short
+//        dateFormatter.timeStyle = DateFormatter.Style.none
+//        capturedDate = sender.date
+//
+//    }
     
     // Repeats Picker
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -74,18 +77,45 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
     
     //Capture the picker view selection
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-            let repeatsSelection = repeatsPickerData[row]
-            capturedPickerData = repeatsSelection
-            repeatsPickerTextField.text = capturedPickerData
+        let repeatsSelection = repeatsPickerData[row]
+        capturedPickerData = repeatsSelection
+//        repeatsPickerTextField.text = capturedPickerData
     }
-    //Date Picker && Repeats Picker
-    @objc func donePicker() {
+    
+    //Date Picker done button pressed
+    @objc func donePickerDate() {
+        // After done button pressed on datePicker:
+        
+        let dateFormatter: DateFormatter = DateFormatter()
+        dateFormatter.dateStyle = DateFormatter.Style.short
+        dateFormatter.timeStyle = DateFormatter.Style.none
+        dateTextField.text = dateFormatter.string(from: datePicker.date)
+        //TODO: - Captured date keeps replacing current date with date pickers date
+        
+        //capturedDate
+        let dateString = dateTextField.text
+        
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "MM-dd-yyyy"
+        capturedDate = dateFormatter.date(from: dateString!)!
+        
         if dateTextField.isFirstResponder {
             dateTextField.resignFirstResponder()
         }
+        
+        self.view.endEditing(true)
+    }
+    
+//TODO: - Repeats Picker done button pressed
+    @objc func donePickerRepeats() {
+
+        repeatsPickerTextField.text = "\(capturedPickerData)"
+
         if repeatsPickerTextField.isFirstResponder {
             repeatsPickerTextField.resignFirstResponder()
         }
+        self.view.endEditing(true)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -96,10 +126,11 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
     override func viewWillDisappear(_ animated: Bool) {
         
     }
+    
     // MARK: - Editing
     
     override func setEditing(_ editing: Bool, animated: Bool) {
-       
+        
         // before calling super.setEditing to recognize the switch to Done, resign the first responder if needed and make sure the title is valid.
         
         if !editing {
@@ -143,6 +174,7 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
                 present(alert, animated: true)
                 return
             }
+            
             if let repeats = repeatsPickerTextField.text, repeats.isEmpty {
                 let alert = UIAlertController(title: "Warning",
                                               message: "The expense repeats field is empty",
@@ -163,33 +195,33 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
         titleTextField.isEnabled = editing
         amountTextField.isUserInteractionEnabled = true
         amountTextField.isEnabled = editing
+        notesTextView.isUserInteractionEnabled = true
+        notesTextView.isEditable = editing
+        
         dateTextField.isUserInteractionEnabled = true
         dateTextField.isEnabled = editing
         repeatsPickerTextField.isUserInteractionEnabled = true
         repeatsPickerTextField.isEnabled = editing
-        notesTextView.isUserInteractionEnabled = true
-        notesTextView.isEditable = editing
         
-        //datePicker in line
-        datePicker.datePickerMode = .date
+      //MARK: - Date Picker
+        let dateToolBar = UIToolbar()
+        dateToolBar.barStyle = UIBarStyle.default
+        dateToolBar.isTranslucent = true
+        dateToolBar.tintColor = UIColor.green
+        dateToolBar.sizeToFit()
+        
+        //Bar Button
+        let dateDoneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePickerDate))
+        dateToolBar.setItems([dateDoneButton], animated: true)
+        
+        //Assign Toolbar
+        dateTextField.inputAccessoryView = dateToolBar
+        
+        // Assign Date picker to textfield
         dateTextField.inputView = datePicker
-        datePicker.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: .valueChanged)
-        dateTextField.delegate = self
-        
-        let toolBar2 = UIToolbar()
-        toolBar2.barStyle = UIBarStyle.default
-        toolBar2.isTranslucent = true
-        toolBar2.tintColor = UIColor.green
-        toolBar2.sizeToFit()
-        
-        let doneButton2 = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.plain, target: self, action: #selector(ExpenseDetailTVC.donePicker))
-        
-        let spaceButton2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-        toolBar2.setItems([spaceButton2, spaceButton2, doneButton2], animated: false)
-        toolBar2.isUserInteractionEnabled = true
-        dateTextField.inputAccessoryView = toolBar2
-        
-        //Repeats picker
+        datePicker.datePickerMode = .date
+            
+      //MARK: - Repeats Picker
         
         let frame = self.view.frame
         let repeatsFrame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: 216)
@@ -199,23 +231,24 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
         repeatsPickerTextField.inputView = repeatsSelection
         repeatsPickerTextField.delegate = self
         
-        // possibly enter the directionField config
+        //Picker Toolbar
+        let pickerToolBar = UIToolbar()
+        pickerToolBar.barStyle = UIBarStyle.default
+        pickerToolBar.isTranslucent = true
+        pickerToolBar.tintColor = UIColor.green
+        pickerToolBar.sizeToFit()
         
-        let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.default
-        toolBar.isTranslucent = true
-        toolBar.tintColor = UIColor.green
-        toolBar.sizeToFit()
+        //Bar Button
+        let pickerDoneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePickerRepeats))
+        pickerToolBar.setItems([pickerDoneButton], animated: true)
         
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.plain, target: self, action: #selector(ExpenseDetailTVC.donePicker))
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-        toolBar.setItems([spaceButton, spaceButton, doneButton], animated: false)
-        toolBar.isUserInteractionEnabled = true
-        repeatsPickerTextField.inputAccessoryView = toolBar
-   
+        //Assign Toolbar
+        repeatsPickerTextField.inputAccessoryView = pickerToolBar
+        
         //If the UI is entering the editing state, simply return
         guard !isEditing, let expense = expense else { return }
         
+        //MARK: - Save Context
         let context = expense.managedObjectContext!
         
         context.performAndWait {
@@ -233,7 +266,7 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
                                               preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
                 present(alert, animated: true)
-                return //Put a Warning Alert
+                return
             }
         }
     }
@@ -259,15 +292,7 @@ extension ExpenseDetailTVC {
         titleTextField.text = expense?.title ?? ""
         //Amount
         if let amount = expense?.amount {
-        //MARK: - Number Formatter
-            let formatter = NumberFormatter()
-            formatter.minimumFractionDigits = 0
-            formatter.maximumFractionDigits = 2
-            formatter.numberStyle = .currency
-            formatter.locale = .current
-            
-            amountTextField.text = String("\(formatter.string(from: NSNumber(value: amount))!)")
-//            amountTextField.text = String(amount)
+            amountTextField.text = String(amount)
         } else {
             amountTextField.text = ""
         }
@@ -281,11 +306,13 @@ extension ExpenseDetailTVC {
         }
         //Repeats
         repeatsPickerTextField.text = expense?.repeats ?? "None"
+        
         //Notes
         notesTextView.text = expense?.notes ?? ""
         tableView.reloadData()
     }
 }
+/*
 
 extension ExpenseDetailTVC {
     
@@ -310,4 +337,4 @@ extension ExpenseDetailTVC {
         }
     }
 }
-
+*/
