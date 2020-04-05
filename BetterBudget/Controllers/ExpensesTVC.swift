@@ -263,7 +263,7 @@ extension ExpensesTVC: ExpenseInteractionDelegate {
         } else {
             expenseDetailTVC.expense = expense
         }
-        expenseDetailTVC.refreshUI()
+        expenseDetailTVC.populateUI()
     }
     
     func willShowExpenseDetailTVC(_ controller: ExpenseDetailTVC) {
