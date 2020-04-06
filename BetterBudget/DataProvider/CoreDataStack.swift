@@ -147,7 +147,7 @@ extension CoreDataStack {
                 NotificationCenter.default.post(name: .didFindRelevantTransactions, object: self, userInfo: ["transactions": transactions])
             }
             
-            //Deduplicate the new expenses
+            //Deduplicate the new expenses and new income
             //Maybe revisit this if necessary
             
             lastHistoryToken = transactions.last!.token

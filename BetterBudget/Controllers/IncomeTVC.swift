@@ -1,8 +1,8 @@
 //
-//  ExpensesTVC.swift
+//  IncomeTVC.swift
 //  BetterBudget
 //
-//  Created by JOHN JAMES III on 3/22/20.
+//  Created by JOHN JAMES III on 4/5/20.
 //  Copyright © 2020 JOHN JAMES III. All rights reserved.
 //
 
@@ -10,15 +10,14 @@ import UIKit
 import CoreData
 import CloudKit
 
-class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
+class IncomeTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     
-    weak var expensesTVC: ExpensesTVC?
-    weak var expenseDetailTVC: ExpenseDetailTVC?
+    weak var incomeTVC: IncomeTVC?
+    weak var incomeDetailTVC: IncomeDetailTVC?
     
-    private lazy var dataProvider: ExpenseProvider = {
+    private lazy var dataProvider: IncomeProvider = {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        let provider = ExpenseProvider(with: appDelegate!.coreDataStack.persistentContainer,
-                                       fetchedResultsControllerDelegate: self)
+        let provider = IncomeProvider(with: appDelegate!.coreDataStack.persistentContainer, fetchedResultsControllerDelegate: self)
         return provider
     }()
     
@@ -36,9 +35,8 @@ class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
             self, selector: #selector(type(of: self).didFindRelevantTransactions(_:)),
             name: .didFindRelevantTransactions, object: nil)
         
-        
         tableView.reloadData()
-        didUpdateExpense(nil)
+        didUpdateIncome(nil)
         
         
     }
@@ -66,23 +64,23 @@ class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         
         if !editing {
             tableView.reloadData()
-            didUpdateExpense(nil)
+            didUpdateIncome(nil)
             
         }
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "expenseDetailSegue",
-            let expenseDetailVC = segue.destination as? ExpenseDetailTVC else {
+        guard segue.identifier == "incomeDetailSegue",
+            let incomeDetailTVC = segue.destination as? IncomeDetailTVC else {
                 return
         }
         
         navigationItem.leftItemsSupplementBackButton = true
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            let expense = dataProvider.fetchedResultsController.object(at: indexPath)
-            expenseDetailVC.expense = expense
+            let income = dataProvider.fetchedResultsController.object(at: indexPath)
+            incomeDetailTVC.income = income
         }
     }
     
@@ -95,7 +93,7 @@ class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
 
 // MARK: - Table view DataSource and Delegate
 
-extension ExpensesTVC {
+extension IncomeTVC {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -106,10 +104,10 @@ extension ExpensesTVC {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ExpensesListCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "IncomeListCell", for: indexPath)
         
-        let expense = dataProvider.fetchedResultsController.object(at: indexPath)
-        cell.textLabel?.text = expense.title
+        let income = dataProvider.fetchedResultsController.object(at: indexPath)
+        cell.textLabel?.text = income.title
         
         
         let formatter = NumberFormatter()
@@ -119,7 +117,7 @@ extension ExpensesTVC {
         formatter.locale = .current
         // MARK: - Need to add space between the $ & amount - Refer to extension in Number+Extensions.swift
         // Needs to look like this: $ 55 and not $55
-        cell.detailTextLabel?.text = String("\(formatter.string(from: NSNumber(value: expense.amount))!)")
+        cell.detailTextLabel?.text = String("\(formatter.string(from: NSNumber(value: income.amount))!)")
         //        cell.detailTextLabel?.text = expense.amount.customNumberPresenter(for: .expense, formatting: true)
         
         return cell
@@ -128,47 +126,47 @@ extension ExpensesTVC {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
         
-        let expense = dataProvider.fetchedResultsController.object(at: indexPath)
-        dataProvider.delete(expense: expense) {
-            self.didUpdateExpense(nil)
+        let income = dataProvider.fetchedResultsController.object(at: indexPath)
+        dataProvider.delete(income: income) {
+            self.didUpdateIncome(nil)
         }
     }
 }
 
 //MARK: - Handling didFindRelevantTransactions
 
-extension ExpensesTVC {
+extension IncomeTVC {
     
     @objc
     func didFindRelevantTransactions(_ notification: Notification) {
         guard let relevantTransactions = notification.userInfo?["transactions"] as? [NSPersistentHistoryTransaction] else { preconditionFailure() }
         
-        guard let expenseDetailTVC = expenseDetailTVC, let expense = expenseDetailTVC.expense else {
+        guard let incomeDetailTVC = incomeDetailTVC, let income = incomeDetailTVC.income else {
             update(with: relevantTransactions, select: nil)
             return
         }
         
         // Check if the current selected post is deleted or updated.
         // If not, and the user isn't editing it, merge the changes silently; otherwise, alert the user and go back to the main view
-        var isSelectedExpenseChanged = false
+        var isSelectedIncomeChanged = false
         var changeType: NSPersistentHistoryChangeType?
         
         loop0: for transaction in relevantTransactions {
-            for change in transaction.changes! where change.changedObjectID == expense.objectID {
+            for change in transaction.changes! where change.changedObjectID == income.objectID {
                 if change.changeType == .delete || change.changeType == .update {
-                    isSelectedExpenseChanged = true
+                    isSelectedIncomeChanged = true
                     changeType = change.changeType
                     break loop0
                 }
             }
         }
         
-        if !isSelectedExpenseChanged ||
-            (!expenseDetailTVC.isEditing && expenseDetailTVC.presentedViewController == nil) {
+        if !isSelectedIncomeChanged ||
+            (!incomeDetailTVC.isEditing && incomeDetailTVC.presentedViewController == nil) {
             if let changeType = changeType, changeType == .delete {
                 update(with: relevantTransactions, select: nil)
             } else {
-                update(with: relevantTransactions, select: expense)
+                update(with: relevantTransactions, select: income)
             }
             return
         }
@@ -180,30 +178,30 @@ extension ExpensesTVC {
         // potToRootViewController does nothing when the splitViewController is not collapsed.
         alert.addAction(UIAlertAction(title: "Reload the main view", style: .default) {_ in
             
-            if expenseDetailTVC.presentedViewController != nil {
-                expenseDetailTVC.dismiss(animated: true) {
+            if incomeDetailTVC.presentedViewController != nil {
+                incomeDetailTVC.dismiss(animated: true) {
                     self.navigationController?.popToRootViewController(animated: true)
                 }
             } else {
                 self.navigationController?.popToRootViewController(animated: true)
             }
-            self.resetAndReload(select: expense)
+            self.resetAndReload(select: income)
         })
         
         // Present the alert controller.
-        var presentingViewController: UIViewController = expenseDetailTVC
-        if expenseDetailTVC.presentedViewController != nil {
-            presentingViewController = expenseDetailTVC.presentedViewController!
+        var presentingViewController: UIViewController = incomeDetailTVC
+        if incomeDetailTVC.presentedViewController != nil {
+            presentingViewController = incomeDetailTVC.presentedViewController!
         }
         presentingViewController.present(alert, animated: true)
     }
     
     // Reset and reload if the transaction count is high. When there are only a few transactions, merge the changes one by one.
     // Adjust the number of transactions based on performance.
-    private func update(with transactions: [NSPersistentHistoryTransaction], select expense: Expense?) {
+    private func update(with transactions: [NSPersistentHistoryTransaction], select income: Income?) {
         if transactions.count > 20 {
             print("###\(#function): Relevant transactions: \(transactions.count), reset and reload.")
-            resetAndReload(select: expense)
+            resetAndReload(select: income)
             return
         }
         
@@ -212,10 +210,10 @@ extension ExpensesTVC {
             let viewContext = dataProvider.persistentContainer.viewContext
             NSManagedObjectContext.mergeChanges(fromRemoteContextSave: userInfo, into: [viewContext])
         }
-        didUpdateExpense(expense)
+        didUpdateIncome(income)
     }
     
-    private func resetAndReload(select expense: Expense?) {
+    private func resetAndReload(select income: Income?) {
         dataProvider.persistentContainer.viewContext.reset()
         do {
             try self.dataProvider.fetchedResultsController.performFetch()
@@ -224,12 +222,12 @@ extension ExpensesTVC {
         }
         //May need to adjust the reloadSections because the TVC is managing the sections in numberOfSections
         tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-        didUpdateExpense(expense)
+        didUpdateIncome(income)
     }
 }
 
-extension ExpensesTVC: ExpenseInteractionDelegate {
-    func didUpdateExpense(_ expense: Expense?, shouldReloadRow: Bool = false) {
+extension IncomeTVC: IncomeInteractionDelegate {
+    func didUpdateIncome(_ income: Income?, shouldReloadRow: Bool = false) {
         let rowCount = dataProvider.fetchedResultsController.fetchedObjects?.count ?? 0
         
         navigationItem.leftBarButtonItem?.isEnabled = (rowCount > 0) ? true : false
@@ -237,8 +235,8 @@ extension ExpensesTVC: ExpenseInteractionDelegate {
         // Get the indexPath for the expense. Use the currently selected indexPath if any, or the first row otherwise.
         // indexPath will remain nil if the tableView has no data.
         var indexPath: IndexPath?
-        if let expense = expense {
-            indexPath = dataProvider.fetchedResultsController.indexPath(forObject: expense)
+        if let income = income {
+            indexPath = dataProvider.fetchedResultsController.indexPath(forObject: income)
         } else {
             indexPath = tableView.indexPathForSelectedRow
             if indexPath == nil && tableView.numberOfRows(inSection: 0) > 0 {
@@ -251,31 +249,31 @@ extension ExpensesTVC: ExpenseInteractionDelegate {
         guard !shouldReloadRow else { return }
         
         //Reload the ExpenseDtailTVC if needed.
-        guard let expenseDetailTVC = expenseDetailTVC else { return }
+        guard let incomeDetailTVC = incomeDetailTVC else { return }
         
         if let indexPath = indexPath {
-            expenseDetailTVC.expense = dataProvider.fetchedResultsController.object(at: indexPath)
+            incomeDetailTVC.income = dataProvider.fetchedResultsController.object(at: indexPath)
         } else {
-            expenseDetailTVC.expense = expense
+            incomeDetailTVC.income = income
         }
-        expenseDetailTVC.populateUI()
+        incomeDetailTVC.populateUI()
     }
     
-    func willShowExpenseDetailTVC(_ controller: ExpenseDetailTVC) {
+    func willShowIncomeDetailTVC(_ controller: IncomeDetailTVC) {
         if controller.delegate == nil {
-            expenseDetailTVC = controller
+            incomeDetailTVC = controller
             controller.delegate = self
         }
         
-        if let expense = controller.expense {
+        if let income = controller.income {
             if tableView.indexPathForSelectedRow == nil {
-                if let selectedRow = dataProvider.fetchedResultsController.indexPath(forObject: expense) {
+                if let selectedRow = dataProvider.fetchedResultsController.indexPath(forObject: income) {
                     tableView.selectRow(at: selectedRow, animated: true, scrollPosition: .none)
                 }
             }
         } else {
             if tableView.numberOfRows(inSection: 0) > 0 {
-                didUpdateExpense(nil)
+                didUpdateIncome(nil)
             }
         }
     }
@@ -283,17 +281,22 @@ extension ExpensesTVC: ExpenseInteractionDelegate {
 
 //MARK: - Action Handlers
 
-extension ExpensesTVC {
-    //MARK: - addExpense needs to create the new expense, and then open that expense in ExpenseDetailTVC.
-    @IBAction func addExpense(_ sender: UIBarButtonItem) {
-        dataProvider.addExpense(in: dataProvider.persistentContainer.viewContext) { expense in
-            self.didUpdateExpense(expense)
-            self.resetAndReload(select: expense)
+extension IncomeTVC {
+
+    @IBAction func addIncome(_ sender: UIBarButtonItem) {
+        dataProvider.addIncome(in: dataProvider.persistentContainer.viewContext) { income in
+            self.didUpdateIncome(income)
+            self.resetAndReload(select: income)
         }
-        
     }
     
+    
+//    @IBAction func addExpense(_ sender: UIBarButtonItem) {
+//        dataProvider.addExpense(in: dataProvider.persistentContainer.viewContext) { expense in
+//            self.didUpdateExpense(expense)
+//            self.resetAndReload(select: expense)
+//        }
+//
+//    }
+    
 }
-
-
-

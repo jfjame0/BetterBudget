@@ -1,5 +1,5 @@
 //
-//  ExpenseInteractionDelegate.swift
+//  IncomeInteractionDelegate.swift
 //  BetterBudget
 //
 //  Created by JOHN JAMES III on 3/29/20.
@@ -8,14 +8,14 @@
 
 import Foundation
 
-protocol ExpenseInteractionDelegate: class {
+protocol IncomeInteractionDelegate: class {
     
     //When the ExpenseDetailTVC has finished an edit, it calls didUpdateExpense for the delgate (ExpensesTVC) to update the UI.
     //When deleting an expense, pass nil for expense
     
-    func didUpdateExpense(_ expense: Expense?, shouldReloadRow: Bool)
+    func didUpdateIncome(_ expense: Income?, shouldReloadRow: Bool)
     
     
     //Call this method so that the ExpensesTVC has a chance to build up the connection.
-    func willShowExpenseDetailTVC(_ controller: ExpenseDetailTVC)
+    func willShowIncomeDetailTVC(_ controller: IncomeDetailTVC)
 }

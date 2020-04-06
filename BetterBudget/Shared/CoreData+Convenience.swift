@@ -27,6 +27,9 @@ enum ContextSaveContextualInfo: String {
     case addExpense = "adding an expense"
     case deleteExpense = "deleting an expense"
     case updateExpense = "saving expense details"
+    case addIncome = "adding an income"
+    case deleteIncome = "deleting an income"
+    case updateIncome = "saving income details"
 }
 
 extension NSManagedObjectContext {

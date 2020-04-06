@@ -26,3 +26,22 @@ enum Schema {
     }
     
 }
+
+enum Schema2 {
+    
+    enum Income: String {
+        case title
+    }
+    enum Amount: Double {
+        case amount
+    }
+    enum payDate: Any {
+        case payDate
+    }
+    enum Repeats: String {
+        case repeats
+    }
+    enum Notes: String {
+        case notes
+    }
+}

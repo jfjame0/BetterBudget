@@ -9,11 +9,11 @@
 import UIKit
 
 class PickerBasedTextField: UITextField, UITextFieldDelegate {
-
+    
     override func caretRect(for position: UITextPosition) -> CGRect {
         return CGRect.zero
     }
-
+    
     let border = CALayer()
     let width = CGFloat(2.0)
     

@@ -7,7 +7,15 @@
         <attribute name="repeats" optional="YES" attributeType="String"/>
         <attribute name="title" attributeType="String" defaultValueString=""/>
     </entity>
+    <entity name="Income" representedClassName="Income" syncable="YES" codeGenerationType="class">
+        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="payDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="repeats" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+    </entity>
     <elements>
         <element name="Expense" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="Income" positionX="-63" positionY="18" width="128" height="118"/>
     </elements>
 </model>

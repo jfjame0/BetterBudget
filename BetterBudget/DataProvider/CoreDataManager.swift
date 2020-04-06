@@ -14,7 +14,7 @@ class CoreDataManager {
     static let shared = CoreDataManager()
     
     // MARK: - Core Data stack
-
+    
     lazy var persistentContainer: NSPersistentCloudKitContainer = {
         let container = NSPersistentCloudKitContainer(name: "CoreDataCloudKit")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -30,9 +30,9 @@ class CoreDataManager {
         context.automaticallyMergesChangesFromParent = true
         return context
     }
-
+    
     // MARK: - Core Data Saving support
-
+    
     func saveContext () {
         let context = persistentContainer.viewContext
         if context.hasChanges {
@@ -67,4 +67,25 @@ extension CoreDataManager {
             }
         }
     }
+    
+    static func saveIncomeEntity(title: String?, amount: Double?, payDate: Date?, repeats: String?, notes: String?) {
+        
+        let income = Income(context: managedContext)
+        let context = income.managedObjectContext!
+        
+        context.performAndWait {
+            if let title = title,
+                let amount = amount {
+                income.title = title
+                income.amount = Double(amount)
+                income.payDate = payDate
+                income.repeats = repeats
+                income.notes = notes
+            } else {
+                return //Put a Warning Alert
+            }
+        }
+    }
+    
+    
 }

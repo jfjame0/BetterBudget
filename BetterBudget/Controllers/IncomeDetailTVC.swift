@@ -1,8 +1,8 @@
 //
-//  ExpenseDetailTVC.swift
+//  IncomeDetailTVC.swift
 //  BetterBudget
 //
-//  Created by JOHN JAMES III on 3/22/20.
+//  Created by JOHN JAMES III on 4/5/20.
 //  Copyright © 2020 JOHN JAMES III. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import CloudKit
 
-class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, NSFetchedResultsControllerDelegate {
+class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, NSFetchedResultsControllerDelegate {
     
     @IBOutlet var table: UITableView!
     @IBOutlet weak var titleTextField: UITextField!
@@ -18,30 +18,25 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
     @IBOutlet weak var dateTextField: UITextField!
     @IBOutlet weak var repeatsPickerTextField: UITextField!
     @IBOutlet weak var notesTextView: UITextView!
-    //TODO: - Add a prefix label in main.storyboard, in the amountCell that holds a currency symbol:
-    //    prefixLabel.text = "+" + NSLocale.defaultCurrency
-    //    prefixLabel.textColor = UIColor.green
+
+    weak var delegate: IncomeInteractionDelegate?
     
-    weak var delegate: ExpenseInteractionDelegate?
-    
-    private lazy var dataProvider: ExpenseProvider = {
+    private lazy var dataProvider: IncomeProvider = {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        let provider = ExpenseProvider(with: appDelegate!.coreDataStack.persistentContainer,
+        let provider = IncomeProvider(with: appDelegate!.coreDataStack.persistentContainer,
                                        fetchedResultsControllerDelegate: self)
         return provider
     }()
     
-    var expense: Expense?
-//    let dueDatePickerSelection = UIDatePicker()
+    var income: Income?
+//    let payDatePickerSelection = UIDatePicker()
     var repeatsSelection = UIPickerView()
     let datePicker: UIDatePicker = UIDatePicker()
     var repeatsPickerData: [String] = ["None", "Weekly", "2 Weeks", "Monthly", "2 Months", "6 Months", "Yearly"]
     
-    //MARK: - AddExpenseTVC Life Cycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-                    print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        //            print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
         initUI()
         populateUI()
@@ -50,7 +45,7 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
     
     private func initUI() {
         self.navigationItem.rightBarButtonItem = self.editButtonItem
-        self.navigationItem.title = expense?.title
+        self.navigationItem.title = income?.title
         
         //MARK: - Date Picker
         let dateToolBar = UIToolbar()
@@ -175,7 +170,7 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
             
             if let title = titleTextField.text, title.isEmpty {
                 let alert = UIAlertController(title: "Warning",
-                                              message: "The expense title is empty",
+                                              message: "The income title is empty",
                                               preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
                 present(alert, animated: true)
@@ -183,7 +178,7 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
             }
             if let amount = amountTextField.text, amount.isEmpty {
                 let alert = UIAlertController(title: "Warning",
-                                              message: "The expense amount is empty",
+                                              message: "The income amount is empty",
                                               preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
                 present(alert, animated: true)
@@ -191,7 +186,7 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
             }
             if let date = dateTextField.text, date.isEmpty {
                 let alert = UIAlertController(title: "Warning",
-                                              message: "The expense due date is empty",
+                                              message: "The income due date is empty",
                                               preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
                 present(alert, animated: true)
@@ -200,7 +195,7 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
             
             if let repeats = repeatsPickerTextField.text, repeats.isEmpty {
                 let alert = UIAlertController(title: "Warning",
-                                              message: "The expense repeats field is empty",
+                                              message: "The income repeats field is empty",
                                               preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
                 present(alert, animated: true)
@@ -226,26 +221,26 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
         repeatsPickerTextField.isEnabled = editing
         
         //If the UI is entering the editing state, simply return
-        guard !isEditing, let expense = expense else { return }
+        guard !isEditing, let income = income else { return }
         
         //MARK: - Save Context
-        let context = expense.managedObjectContext!
+        let context = income.managedObjectContext!
         
         context.performAndWait {
             if let title = titleTextField.text,
                 let amount = amountTextField.text {
-                expense.title = title
-                expense.amount = Double(amount)!
-                expense.dueDate = datePicker.date
+                income.title = title
+                income.amount = Double(amount)!
+                income.payDate = datePicker.date
                 
                 let selectedRow = repeatsSelection.selectedRow(inComponent: 0)
-                expense.repeats = repeatsPickerData[selectedRow]
+                income.repeats = repeatsPickerData[selectedRow]
                 
-                expense.notes = notesTextView.text
-                context.save(with: .updateExpense)
+                income.notes = notesTextView.text
+                context.save(with: .updateIncome)
             } else {
                 let alert = UIAlertController(title: "Error",
-                                              message: "Something went wrong. The expense didn't save. Try again.",
+                                              message: "Something went wrong. The income didn't save. Try again.",
                                               preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
                 present(alert, animated: true)
@@ -257,7 +252,7 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerView
 
 //MARK: - TableView Data Source & TableView Delegate Methods
 
-extension ExpenseDetailTVC {
+extension IncomeDetailTVC {
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .none
     }
@@ -267,29 +262,29 @@ extension ExpenseDetailTVC {
     }
 }
 
-extension ExpenseDetailTVC {
+extension IncomeDetailTVC {
     
     func populateUI() {
-        navigationItem.rightBarButtonItem?.isEnabled = expense == nil ? false : true
+        navigationItem.rightBarButtonItem?.isEnabled = income == nil ? false : true
         //Title
-        titleTextField.text = expense?.title ?? ""
+        titleTextField.text = income?.title ?? ""
         //Amount
-        if let amount = expense?.amount {
+        if let amount = income?.amount {
             amountTextField.text = String(format: "%.0f", amount)
         } else {
             amountTextField.text = ""
         }
         //Date
-        if let currentDueDate = expense?.dueDate {
+        if let currentPayDate = income?.payDate {
             let formatter = DateFormatter()
             formatter.dateStyle = .short
-            dateTextField.text = formatter.string(from: currentDueDate)
-            datePicker.date = currentDueDate
+            dateTextField.text = formatter.string(from: currentPayDate)
+            datePicker.date = currentPayDate
         } else {
             dateTextField.text = ""
         }
         //Repeats
-        if let repeats = expense?.repeats {
+        if let repeats = income?.repeats {
             //["None", "Weekly", "2 Weeks", "Monthly", "2 Months", "6 Months", "Yearly"]
             repeatsPickerTextField.text = repeats
             let index = repeatsPickerData.firstIndex(of: repeats) ?? 0
@@ -298,9 +293,8 @@ extension ExpenseDetailTVC {
             repeatsPickerTextField.text = "None"
         }
         //Notes
-        notesTextView.text = expense?.notes ?? ""
+        notesTextView.text = income?.notes ?? ""
         tableView.reloadData()
     }
 }
-
 
