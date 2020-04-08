@@ -17,6 +17,7 @@
 		2813DAA82427F60F00B0FC18 /* BetterBudgetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2813DAA72427F60F00B0FC18 /* BetterBudgetTests.swift */; };
 		2813DAB32427F60F00B0FC18 /* BetterBudgetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2813DAB22427F60F00B0FC18 /* BetterBudgetUITests.swift */; };
 		2813DAC62428001F00B0FC18 /* ExpensesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2813DAC52428001F00B0FC18 /* ExpensesTVC.swift */; };
+		28187CCA243D594E00FCA9DA /* BudgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28187CC9243D594E00FCA9DA /* BudgetViewController.swift */; };
 		2832EFF42434230400C4C4D3 /* PickerBasedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2832EFF32434230400C4C4D3 /* PickerBasedTextField.swift */; };
 		2842908D243749BB0034D1F3 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2842908C243749BB0034D1F3 /* CoreDataManager.swift */; };
 		286CB4B024312AB200F63053 /* CoreData+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286CB4AF24312AB200F63053 /* CoreData+Convenience.swift */; };
@@ -75,6 +76,7 @@
 		2813DAB42427F60F00B0FC18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2813DAC02427F63400B0FC18 /* BetterBudget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BetterBudget.entitlements; sourceTree = "<group>"; };
 		2813DAC52428001F00B0FC18 /* ExpensesTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesTVC.swift; sourceTree = "<group>"; };
+		28187CC9243D594E00FCA9DA /* BudgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetViewController.swift; sourceTree = "<group>"; };
 		2832EFF32434230400C4C4D3 /* PickerBasedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerBasedTextField.swift; sourceTree = "<group>"; };
 		2842908C243749BB0034D1F3 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		286CB4AF24312AB200F63053 /* CoreData+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+Convenience.swift"; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				28754683243AE0B000887359 /* IncomeDetailTVC.swift */,
 				286CB4B9243176B100F63053 /* ExpenseInteractionDelegate.swift */,
 				28754687243AEB5B00887359 /* IncomeInteractionDelegate.swift */,
+				28187CC9243D594E00FCA9DA /* BudgetViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -400,6 +403,7 @@
 				2811176B24355EC00031CC37 /* AddExpenseModel.swift in Sources */,
 				2813DAC62428001F00B0FC18 /* ExpensesTVC.swift in Sources */,
 				28DD1A5024350C5800EAB3EF /* NSLocale+Extensions.swift in Sources */,
+				28187CCA243D594E00FCA9DA /* BudgetViewController.swift in Sources */,
 				28754684243AE0B000887359 /* IncomeDetailTVC.swift in Sources */,
 				28DD1A4E24350C4800EAB3EF /* String+Extensions.swift in Sources */,
 				28DD1A5224350F4100EAB3EF /* BBMonth.swift in Sources */,
