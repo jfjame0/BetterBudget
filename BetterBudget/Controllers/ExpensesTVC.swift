@@ -30,8 +30,11 @@ class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 88
+        tableView.tableFooterView = UIView() //Drops off the additional blank cells at end of list
         
-        // Observe .didFinishRelevantTransactions to update the UI if needed.
+        //After deleting storyboard, implement:
+        tableView.register(ExpenseCustomCell.self, forCellReuseIdentifier: "ExpenseListCell")
+        
         NotificationCenter.default.addObserver(
             self, selector: #selector(type(of: self).didFindRelevantTransactions(_:)),
             name: .didFindRelevantTransactions, object: nil)
@@ -57,9 +60,6 @@ class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     }
     
     //MARK: - Set Editing
-    //setEditing clears the current selection which expenseDetailTVC relies on.
-    // Don't bother to reserve the selection, just select the first item, if any.
-    // Meanwhile, editButtonItem will break the tableView selection after deletions. Reloading tableView after works around the issue.
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
@@ -105,9 +105,16 @@ extension ExpensesTVC {
         return dataProvider.fetchedResultsController.fetchedObjects?.count ?? 0
     }
     
+    //Need to add a height for row after deleting main.storyboard
+    //    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    //        return 100
+    //    }
+    
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ExpensesListCell", for: indexPath)
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ExpenseListCell", for: indexPath)
+        //can dequeReusableCell as! ExpenseCustomCell, after main.storyboard deleted. 
         let expense = dataProvider.fetchedResultsController.object(at: indexPath)
         cell.textLabel?.text = expense.title
         
@@ -117,10 +124,8 @@ extension ExpensesTVC {
         formatter.maximumFractionDigits = 2
         formatter.numberStyle = .currency
         formatter.locale = .current
-        // MARK: - Need to add space between the $ & amount - Refer to extension in Number+Extensions.swift
-        // Needs to look like this: $ 55 and not $55
+        
         cell.detailTextLabel?.text = String("\(formatter.string(from: NSNumber(value: expense.amount))!)")
-        //        cell.detailTextLabel?.text = expense.amount.customNumberPresenter(for: .expense, formatting: true)
         
         return cell
     }

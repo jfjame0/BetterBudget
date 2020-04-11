@@ -15,49 +15,89 @@ class IncomeTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     weak var incomeTVC: IncomeTVC?
     weak var incomeDetailTVC: IncomeDetailTVC?
     
+//    var gradient : CAGradientLayer?
+//    let gradientView : UIView = {
+//        let view = UIView()
+//        return view
+//    }()
+    
     private lazy var dataProvider: IncomeProvider = {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let provider = IncomeProvider(with: appDelegate!.coreDataStack.persistentContainer, fetchedResultsControllerDelegate: self)
         return provider
     }()
     
-    //MARK: - View Controller life cycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.title = "Income"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        //addTapped() is at the bottom of this view controller
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+//        appearance.backgroundColor = UIColor.systemGreen
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.systemGreen]
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        navigationItem.compactAppearance = appearance
+        
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.systemGreen
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.systemGreen
+
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 88
+        tableView.tableFooterView = UIView()
         
-        // Observe .didFinishRelevantTransactions to update the UI if needed.
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+
+        
+        tableView.register(IncomeCustomCell.self, forCellReuseIdentifier: "IncomeListCell")
+
         NotificationCenter.default.addObserver(
             self, selector: #selector(type(of: self).didFindRelevantTransactions(_:)),
             name: .didFindRelevantTransactions, object: nil)
         
+//        setupClearNavBar()
+//        setupGradient()
         tableView.reloadData()
         didUpdateIncome(nil)
-        
-        
+ 
     }
+
+    /*
+    func setupGradient() {
+        // Calculates the size of NavBar (Either large or normal)
+//        guard let height = navigationController?.navigationBar.frame.height else { return }
+        let height : CGFloat = 90
+        let color = UIColor.black.withAlphaComponent(0.7).cgColor
+        let clear = UIColor.black.withAlphaComponent(0.0).cgColor
+        gradient = setupGradient(height: height, topColor: color,bottomColor: clear)
+        view.addSubview(gradientView)
+        NSLayoutConstraint.activate([
+            gradientView.topAnchor.constraint(equalTo: view.topAnchor),
+            gradientView.leftAnchor.constraint(equalTo: view.leftAnchor),
+        ])
+        gradientView.layer.insertSublayer(gradient!, at: 0)
+    }
+    */
     
-    @IBAction func refreshControlValueChanged(_ sender: UIRefreshControl) {
+    //TODO: - RefreshControl needs to work. Currently, it does not.
+    func refreshControlValueChanged(_ sender: UIRefreshControl) {
         tableView.reloadData()
         sender.endRefreshing()
+        print("refreshControlValueChanged")
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(animated)
-        
-        
     }
     
     //MARK: - Set Editing
-    //setEditing clears the current selection which expenseDetailTVC relies on.
-    // Don't bother to reserve the selection, just select the first item, if any.
-    // Meanwhile, editButtonItem will break the tableView selection after deletions. Reloading tableView after works around the issue.
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
@@ -65,24 +105,33 @@ class IncomeTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         if !editing {
             tableView.reloadData()
             didUpdateIncome(nil)
-            
         }
-        
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "incomeDetailSegue",
-            let incomeDetailTVC = segue.destination as? IncomeDetailTVC else {
-                return
-        }
-        
-        navigationItem.leftItemsSupplementBackButton = true
-        
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let incomeDetailTVC = IncomeDetailTVC()
         if let indexPath = tableView.indexPathForSelectedRow {
             let income = dataProvider.fetchedResultsController.object(at: indexPath)
             incomeDetailTVC.income = income
         }
+        present(incomeDetailTVC, animated: true, completion: nil)
     }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        guard segue.identifier == "incomeDetailSegue",
+//            let incomeDetailTVC = segue.destination as? IncomeDetailTVC else {
+//                return
+//        }
+//
+//        navigationItem.leftItemsSupplementBackButton = true
+//
+//        if let indexPath = tableView.indexPathForSelectedRow {
+//            let income = dataProvider.fetchedResultsController.object(at: indexPath)
+//            incomeDetailTVC.income = income
+//        }
+//    }
+    
+    
     
     // MARK: - NSFetchedResultsControllerDelegate
     
@@ -107,8 +156,8 @@ extension IncomeTVC {
         let cell = tableView.dequeueReusableCell(withIdentifier: "IncomeListCell", for: indexPath)
         
         let income = dataProvider.fetchedResultsController.object(at: indexPath)
+
         cell.textLabel?.text = income.title
-        
         
         let formatter = NumberFormatter()
         formatter.minimumFractionDigits = 0
@@ -282,21 +331,12 @@ extension IncomeTVC: IncomeInteractionDelegate {
 //MARK: - Action Handlers
 
 extension IncomeTVC {
-
-    @IBAction func addIncome(_ sender: UIBarButtonItem) {
+    
+    @objc
+    func addTapped(_ sender: UIBarButtonItem) {
         dataProvider.addIncome(in: dataProvider.persistentContainer.viewContext) { income in
             self.didUpdateIncome(income)
             self.resetAndReload(select: income)
         }
     }
-    
-    
-//    @IBAction func addExpense(_ sender: UIBarButtonItem) {
-//        dataProvider.addExpense(in: dataProvider.persistentContainer.viewContext) { expense in
-//            self.didUpdateExpense(expense)
-//            self.resetAndReload(select: expense)
-//        }
-//
-//    }
-    
 }

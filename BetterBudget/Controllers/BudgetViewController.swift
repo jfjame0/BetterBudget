@@ -10,24 +10,6 @@ import UIKit
 import CoreData
 import CloudKit
 
-class BudgetCell: UICollectionViewCell {
-    
-    @IBOutlet weak var textLabel: UILabel!
-    
-}
-
-class ExpensesInBudgetTV: UITableView, NSFetchedResultsControllerDelegate {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
-   
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
-    }
-
-}
-
 class BudgetViewController: UIViewController, NSFetchedResultsControllerDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -62,8 +44,9 @@ extension BudgetViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "budgetCell", for: indexPath) as! BudgetCell
-        cell.textLabel.text = "Pay Date " + String(indexPath.row + 1)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BudgetCustomCell", for: indexPath)
+        
+//        cell.textLabel.text = "Pay Date " + String(indexPath.row + 1)
         return cell
     }
 }
@@ -72,6 +55,7 @@ extension BudgetViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.item + 1)
+        
     }
 }
 

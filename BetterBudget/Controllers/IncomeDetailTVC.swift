@@ -12,12 +12,16 @@ import CloudKit
 
 class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, NSFetchedResultsControllerDelegate {
     
-    @IBOutlet var table: UITableView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var amountTextField: UITextField!
-    @IBOutlet weak var dateTextField: UITextField!
-    @IBOutlet weak var repeatsPickerTextField: UITextField!
-    @IBOutlet weak var notesTextView: UITextView!
+    let cellID = "CellID123456"
+    
+    //TODO: - Change TableView Cells to 5 dyanmica prototypes programmatically.
+    //TODO: - Change all these IBOutlets into programmatically created elements
+    var table = UITableView()
+    var titleTextField: UITextField = UITextField()
+    var amountTextField = UITextField()
+    var dateTextField = UITextField()
+    var repeatsPickerTextField = UITextField()
+    var notesTextView = UITextView()
 
     weak var delegate: IncomeInteractionDelegate?
     
@@ -38,9 +42,34 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerViewD
         super.viewDidLoad()
         //            print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
-        initUI()
-        populateUI()
+       
         
+        
+        
+        
+//        initUI()
+//        populateUI()
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.text = "Header"
+        label.backgroundColor = UIColor.lightGray
+        return label
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 5
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
+        return cell
     }
     
     private func initUI() {
@@ -105,8 +134,6 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerViewD
         if dateTextField.isFirstResponder {
             dateTextField.resignFirstResponder()
         }
-        
-        //        self.view.endEditing(true)
     }
     
     // Repeats Picker
@@ -132,7 +159,6 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerViewD
             repeatsPickerTextField.resignFirstResponder()
         }
         self.view.endEditing(true)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
