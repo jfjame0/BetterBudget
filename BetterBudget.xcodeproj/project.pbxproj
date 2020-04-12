@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,8 +17,13 @@
 		2813DAA82427F60F00B0FC18 /* BetterBudgetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2813DAA72427F60F00B0FC18 /* BetterBudgetTests.swift */; };
 		2813DAB32427F60F00B0FC18 /* BetterBudgetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2813DAB22427F60F00B0FC18 /* BetterBudgetUITests.swift */; };
 		2813DAC62428001F00B0FC18 /* ExpensesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2813DAC52428001F00B0FC18 /* ExpensesTVC.swift */; };
-		28187CCA243D594E00FCA9DA /* BudgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28187CC9243D594E00FCA9DA /* BudgetViewController.swift */; };
+		2823ACE324425CD80003F11A /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2823ACE224425CD80003F11A /* SwiftUIView.swift */; };
+		2823ACE524425D3C0003F11A /* BudgetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2823ACE424425D3C0003F11A /* BudgetVC.swift */; };
+		2823ACE8244263530003F11A /* LBTATools in Frameworks */ = {isa = PBXBuildFile; productRef = 2823ACE7244263530003F11A /* LBTATools */; };
 		2832EFF42434230400C4C4D3 /* PickerBasedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2832EFF32434230400C4C4D3 /* PickerBasedTextField.swift */; };
+		283CB62624428FD30022314C /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283CB62524428FD30022314C /* UIViewControllerExtensions.swift */; };
+		283CB6282442BB930022314C /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283CB6272442BB930022314C /* HeaderView.swift */; };
+		283CB62A2442F5790022314C /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283CB6292442F5790022314C /* Extension+UIView.swift */; };
 		2842908D243749BB0034D1F3 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2842908C243749BB0034D1F3 /* CoreDataManager.swift */; };
 		286CB4B024312AB200F63053 /* CoreData+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286CB4AF24312AB200F63053 /* CoreData+Convenience.swift */; };
 		286CB4B224312F0700F63053 /* Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286CB4B124312F0700F63053 /* Schema.swift */; };
@@ -31,6 +36,9 @@
 		28754684243AE0B000887359 /* IncomeDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28754683243AE0B000887359 /* IncomeDetailTVC.swift */; };
 		28754686243AE40C00887359 /* IncomeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28754685243AE40C00887359 /* IncomeProvider.swift */; };
 		28754688243AEB5B00887359 /* IncomeInteractionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28754687243AEB5B00887359 /* IncomeInteractionDelegate.swift */; };
+		28B968632443A5450091D121 /* Extensions+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B968622443A5450091D121 /* Extensions+Constraints.swift */; };
+		28B968652443A85E0091D121 /* BudgetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B968642443A85E0091D121 /* BudgetCell.swift */; };
+		28B968672443AE6C0091D121 /* PaydayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B968662443AE6C0091D121 /* PaydayModel.swift */; };
 		28DD1A4824350C0D00EAB3EF /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DD1A4724350C0D00EAB3EF /* Date+extensions.swift */; };
 		28DD1A4A24350C2100EAB3EF /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DD1A4924350C2100EAB3EF /* DateFormatter+Extensions.swift */; };
 		28DD1A4C24350C3400EAB3EF /* Number+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DD1A4B24350C3400EAB3EF /* Number+Extensions.swift */; };
@@ -76,8 +84,12 @@
 		2813DAB42427F60F00B0FC18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2813DAC02427F63400B0FC18 /* BetterBudget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BetterBudget.entitlements; sourceTree = "<group>"; };
 		2813DAC52428001F00B0FC18 /* ExpensesTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesTVC.swift; sourceTree = "<group>"; };
-		28187CC9243D594E00FCA9DA /* BudgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetViewController.swift; sourceTree = "<group>"; };
+		2823ACE224425CD80003F11A /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
+		2823ACE424425D3C0003F11A /* BudgetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetVC.swift; sourceTree = "<group>"; };
 		2832EFF32434230400C4C4D3 /* PickerBasedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerBasedTextField.swift; sourceTree = "<group>"; };
+		283CB62524428FD30022314C /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
+		283CB6272442BB930022314C /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		283CB6292442F5790022314C /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
 		2842908C243749BB0034D1F3 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		286CB4AF24312AB200F63053 /* CoreData+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+Convenience.swift"; sourceTree = "<group>"; };
 		286CB4B124312F0700F63053 /* Schema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schema.swift; sourceTree = "<group>"; };
@@ -90,6 +102,9 @@
 		28754683243AE0B000887359 /* IncomeDetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailTVC.swift; sourceTree = "<group>"; };
 		28754685243AE40C00887359 /* IncomeProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomeProvider.swift; sourceTree = "<group>"; };
 		28754687243AEB5B00887359 /* IncomeInteractionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomeInteractionDelegate.swift; sourceTree = "<group>"; };
+		28B968622443A5450091D121 /* Extensions+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+Constraints.swift"; sourceTree = "<group>"; };
+		28B968642443A85E0091D121 /* BudgetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCell.swift; sourceTree = "<group>"; };
+		28B968662443AE6C0091D121 /* PaydayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaydayModel.swift; sourceTree = "<group>"; };
 		28DD1A4724350C0D00EAB3EF /* Date+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extensions.swift"; sourceTree = "<group>"; };
 		28DD1A4924350C2100EAB3EF /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
 		28DD1A4B24350C3400EAB3EF /* Number+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Number+Extensions.swift"; sourceTree = "<group>"; };
@@ -106,6 +121,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28DEF5D5242845190052EF85 /* CloudKit.framework in Frameworks */,
+				2823ACE8244263530003F11A /* LBTATools in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +145,7 @@
 		2813DA812427F60D00B0FC18 = {
 			isa = PBXGroup;
 			children = (
+				2823ACE224425CD80003F11A /* SwiftUIView.swift */,
 				2813DA8C2427F60D00B0FC18 /* BetterBudget */,
 				2813DAB12427F60F00B0FC18 /* BetterBudgetUITests */,
 				2813DAA62427F60F00B0FC18 /* BetterBudgetTests */,
@@ -186,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				2813DA962427F60D00B0FC18 /* BetterBudget.xcdatamodeld */,
+				28B968662443AE6C0091D121 /* PaydayModel.swift */,
 				2811176A24355EC00031CC37 /* AddExpenseModel.swift */,
 				28DD1A4624350BCC00EAB3EF /* Extensions */,
 			);
@@ -195,6 +213,7 @@
 		2813DACA2428240100B0FC18 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				283CB62424428FB90022314C /* Extensions */,
 				28754681243AD88D00887359 /* BBTabBarController.swift */,
 				2813DAC52428001F00B0FC18 /* ExpensesTVC.swift */,
 				28DEF5D8242893C20052EF85 /* ExpenseDetailTVC.swift */,
@@ -202,7 +221,9 @@
 				28754683243AE0B000887359 /* IncomeDetailTVC.swift */,
 				286CB4B9243176B100F63053 /* ExpenseInteractionDelegate.swift */,
 				28754687243AEB5B00887359 /* IncomeInteractionDelegate.swift */,
-				28187CC9243D594E00FCA9DA /* BudgetViewController.swift */,
+				2823ACE424425D3C0003F11A /* BudgetVC.swift */,
+				28B968642443A85E0091D121 /* BudgetCell.swift */,
+				283CB6272442BB930022314C /* HeaderView.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -210,10 +231,19 @@
 		2832EFF22434229400C4C4D3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2832EFF32434230400C4C4D3 /* PickerBasedTextField.swift */,
 				2813DA932427F60D00B0FC18 /* Main.storyboard */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		283CB62424428FB90022314C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				283CB62524428FD30022314C /* UIViewControllerExtensions.swift */,
+				283CB6292442F5790022314C /* Extension+UIView.swift */,
+				28B968622443A5450091D121 /* Extensions+Constraints.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		286CB4A92431255300F63053 /* DataProvider */ = {
@@ -255,6 +285,7 @@
 				2813DA992427F60F00B0FC18 /* Assets.xcassets */,
 				2813DA9B2427F60F00B0FC18 /* LaunchScreen.storyboard */,
 				287278C5242B157B00CA1717 /* UnusedCode.swift */,
+				2832EFF32434230400C4C4D3 /* PickerBasedTextField.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -283,6 +314,9 @@
 			dependencies = (
 			);
 			name = BetterBudget;
+			packageProductDependencies = (
+				2823ACE7244263530003F11A /* LBTATools */,
+			);
 			productName = BetterBudget;
 			productReference = 2813DA8A2427F60D00B0FC18 /* BetterBudget.app */;
 			productType = "com.apple.product-type.application";
@@ -355,6 +389,9 @@
 				Base,
 			);
 			mainGroup = 2813DA812427F60D00B0FC18;
+			packageReferences = (
+				2823ACE6244263530003F11A /* XCRemoteSwiftPackageReference "LBTATools" */,
+			);
 			productRefGroup = 2813DA8B2427F60D00B0FC18 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -398,12 +435,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2823ACE324425CD80003F11A /* SwiftUIView.swift in Sources */,
 				28DD1A4824350C0D00EAB3EF /* Date+extensions.swift in Sources */,
+				283CB62A2442F5790022314C /* Extension+UIView.swift in Sources */,
 				28DEF5D9242893C20052EF85 /* ExpenseDetailTVC.swift in Sources */,
 				2811176B24355EC00031CC37 /* AddExpenseModel.swift in Sources */,
 				2813DAC62428001F00B0FC18 /* ExpensesTVC.swift in Sources */,
+				28B968652443A85E0091D121 /* BudgetCell.swift in Sources */,
 				28DD1A5024350C5800EAB3EF /* NSLocale+Extensions.swift in Sources */,
-				28187CCA243D594E00FCA9DA /* BudgetViewController.swift in Sources */,
 				28754684243AE0B000887359 /* IncomeDetailTVC.swift in Sources */,
 				28DD1A4E24350C4800EAB3EF /* String+Extensions.swift in Sources */,
 				28DD1A5224350F4100EAB3EF /* BBMonth.swift in Sources */,
@@ -412,18 +451,23 @@
 				286CB4B224312F0700F63053 /* Schema.swift in Sources */,
 				28DD1A4A24350C2100EAB3EF /* DateFormatter+Extensions.swift in Sources */,
 				286CB4B42431336800F63053 /* CoreDataStack.swift in Sources */,
+				28B968672443AE6C0091D121 /* PaydayModel.swift in Sources */,
 				28754686243AE40C00887359 /* IncomeProvider.swift in Sources */,
 				2842908D243749BB0034D1F3 /* CoreDataManager.swift in Sources */,
 				286CB4B024312AB200F63053 /* CoreData+Convenience.swift in Sources */,
 				2813DA982427F60D00B0FC18 /* BetterBudget.xcdatamodeld in Sources */,
 				28754682243AD88D00887359 /* BBTabBarController.swift in Sources */,
 				287278C6242B157B00CA1717 /* UnusedCode.swift in Sources */,
+				283CB6282442BB930022314C /* HeaderView.swift in Sources */,
+				283CB62624428FD30022314C /* UIViewControllerExtensions.swift in Sources */,
+				28B968632443A5450091D121 /* Extensions+Constraints.swift in Sources */,
 				28754680243AD1B300887359 /* IncomeTVC.swift in Sources */,
 				28754688243AEB5B00887359 /* IncomeInteractionDelegate.swift in Sources */,
 				2813DA902427F60D00B0FC18 /* SceneDelegate.swift in Sources */,
 				286CB4BA243176B100F63053 /* ExpenseInteractionDelegate.swift in Sources */,
 				286CB4B82431525E00F63053 /* ExpenseProvider.swift in Sources */,
 				2832EFF42434230400C4C4D3 /* PickerBasedTextField.swift in Sources */,
+				2823ACE524425D3C0003F11A /* BudgetVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -754,6 +798,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2823ACE6244263530003F11A /* XCRemoteSwiftPackageReference "LBTATools" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bhlvoong/LBTATools.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.17;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2823ACE7244263530003F11A /* LBTATools */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2823ACE6244263530003F11A /* XCRemoteSwiftPackageReference "LBTATools" */;
+			productName = LBTATools;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		2813DA962427F60D00B0FC18 /* BetterBudget.xcdatamodeld */ = {

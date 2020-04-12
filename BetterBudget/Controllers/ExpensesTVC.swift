@@ -30,6 +30,7 @@ class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 88
+        tableView.tableFooterView = UIView()
         
         // Observe .didFinishRelevantTransactions to update the UI if needed.
         NotificationCenter.default.addObserver(
