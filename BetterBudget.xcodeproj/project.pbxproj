@@ -37,7 +37,6 @@
 		28754686243AE40C00887359 /* IncomeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28754685243AE40C00887359 /* IncomeProvider.swift */; };
 		28754688243AEB5B00887359 /* IncomeInteractionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28754687243AEB5B00887359 /* IncomeInteractionDelegate.swift */; };
 		28B968632443A5450091D121 /* Extensions+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B968622443A5450091D121 /* Extensions+Constraints.swift */; };
-		28B968652443A85E0091D121 /* BudgetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B968642443A85E0091D121 /* BudgetCell.swift */; };
 		28B968672443AE6C0091D121 /* PaydayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B968662443AE6C0091D121 /* PaydayModel.swift */; };
 		28DD1A4824350C0D00EAB3EF /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DD1A4724350C0D00EAB3EF /* Date+extensions.swift */; };
 		28DD1A4A24350C2100EAB3EF /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DD1A4924350C2100EAB3EF /* DateFormatter+Extensions.swift */; };
@@ -103,7 +102,6 @@
 		28754685243AE40C00887359 /* IncomeProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomeProvider.swift; sourceTree = "<group>"; };
 		28754687243AEB5B00887359 /* IncomeInteractionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomeInteractionDelegate.swift; sourceTree = "<group>"; };
 		28B968622443A5450091D121 /* Extensions+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+Constraints.swift"; sourceTree = "<group>"; };
-		28B968642443A85E0091D121 /* BudgetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCell.swift; sourceTree = "<group>"; };
 		28B968662443AE6C0091D121 /* PaydayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaydayModel.swift; sourceTree = "<group>"; };
 		28DD1A4724350C0D00EAB3EF /* Date+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extensions.swift"; sourceTree = "<group>"; };
 		28DD1A4924350C2100EAB3EF /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
@@ -222,7 +220,6 @@
 				286CB4B9243176B100F63053 /* ExpenseInteractionDelegate.swift */,
 				28754687243AEB5B00887359 /* IncomeInteractionDelegate.swift */,
 				2823ACE424425D3C0003F11A /* BudgetVC.swift */,
-				28B968642443A85E0091D121 /* BudgetCell.swift */,
 				283CB6272442BB930022314C /* HeaderView.swift */,
 			);
 			path = Controllers;
@@ -441,7 +438,6 @@
 				28DEF5D9242893C20052EF85 /* ExpenseDetailTVC.swift in Sources */,
 				2811176B24355EC00031CC37 /* AddExpenseModel.swift in Sources */,
 				2813DAC62428001F00B0FC18 /* ExpensesTVC.swift in Sources */,
-				28B968652443A85E0091D121 /* BudgetCell.swift in Sources */,
 				28DD1A5024350C5800EAB3EF /* NSLocale+Extensions.swift in Sources */,
 				28754684243AE0B000887359 /* IncomeDetailTVC.swift in Sources */,
 				28DD1A4E24350C4800EAB3EF /* String+Extensions.swift in Sources */,
