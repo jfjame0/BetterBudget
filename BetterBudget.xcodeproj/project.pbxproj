@@ -3,14 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		2811176B24355EC00031CC37 /* AddExpenseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2811176A24355EC00031CC37 /* AddExpenseModel.swift */; };
 		2813DA8E2427F60D00B0FC18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2813DA8D2427F60D00B0FC18 /* AppDelegate.swift */; };
 		2813DA902427F60D00B0FC18 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2813DA8F2427F60D00B0FC18 /* SceneDelegate.swift */; };
-		2813DA952427F60D00B0FC18 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2813DA932427F60D00B0FC18 /* Main.storyboard */; };
 		2813DA982427F60D00B0FC18 /* BetterBudget.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2813DA962427F60D00B0FC18 /* BetterBudget.xcdatamodeld */; };
 		2813DA9A2427F60F00B0FC18 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2813DA992427F60F00B0FC18 /* Assets.xcassets */; };
 		2813DA9D2427F60F00B0FC18 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2813DA9B2427F60F00B0FC18 /* LaunchScreen.storyboard */; };
@@ -19,7 +18,6 @@
 		2813DAC62428001F00B0FC18 /* ExpensesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2813DAC52428001F00B0FC18 /* ExpensesTVC.swift */; };
 		2823ACE324425CD80003F11A /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2823ACE224425CD80003F11A /* SwiftUIView.swift */; };
 		2823ACE524425D3C0003F11A /* BudgetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2823ACE424425D3C0003F11A /* BudgetVC.swift */; };
-		2823ACE8244263530003F11A /* LBTATools in Frameworks */ = {isa = PBXBuildFile; productRef = 2823ACE7244263530003F11A /* LBTATools */; };
 		2832EFF42434230400C4C4D3 /* PickerBasedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2832EFF32434230400C4C4D3 /* PickerBasedTextField.swift */; };
 		283CB62624428FD30022314C /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283CB62524428FD30022314C /* UIViewControllerExtensions.swift */; };
 		283CB6282442BB930022314C /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283CB6272442BB930022314C /* HeaderView.swift */; };
@@ -36,6 +34,7 @@
 		28754684243AE0B000887359 /* IncomeDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28754683243AE0B000887359 /* IncomeDetailTVC.swift */; };
 		28754686243AE40C00887359 /* IncomeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28754685243AE40C00887359 /* IncomeProvider.swift */; };
 		28754688243AEB5B00887359 /* IncomeInteractionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28754687243AEB5B00887359 /* IncomeInteractionDelegate.swift */; };
+		288CB7AC24458C0A004756E2 /* IncomeTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288CB7AB24458C0A004756E2 /* IncomeTVCell.swift */; };
 		28B968632443A5450091D121 /* Extensions+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B968622443A5450091D121 /* Extensions+Constraints.swift */; };
 		28B968672443AE6C0091D121 /* PaydayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B968662443AE6C0091D121 /* PaydayModel.swift */; };
 		28DD1A4824350C0D00EAB3EF /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DD1A4724350C0D00EAB3EF /* Date+extensions.swift */; };
@@ -70,7 +69,6 @@
 		2813DA8A2427F60D00B0FC18 /* BetterBudget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BetterBudget.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2813DA8D2427F60D00B0FC18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2813DA8F2427F60D00B0FC18 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		2813DA942427F60D00B0FC18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2813DA972427F60D00B0FC18 /* BetterBudget.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BetterBudget.xcdatamodel; sourceTree = "<group>"; };
 		2813DA992427F60F00B0FC18 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2813DA9C2427F60F00B0FC18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -101,6 +99,7 @@
 		28754683243AE0B000887359 /* IncomeDetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailTVC.swift; sourceTree = "<group>"; };
 		28754685243AE40C00887359 /* IncomeProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomeProvider.swift; sourceTree = "<group>"; };
 		28754687243AEB5B00887359 /* IncomeInteractionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomeInteractionDelegate.swift; sourceTree = "<group>"; };
+		288CB7AB24458C0A004756E2 /* IncomeTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeTVCell.swift; sourceTree = "<group>"; };
 		28B968622443A5450091D121 /* Extensions+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+Constraints.swift"; sourceTree = "<group>"; };
 		28B968662443AE6C0091D121 /* PaydayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaydayModel.swift; sourceTree = "<group>"; };
 		28DD1A4724350C0D00EAB3EF /* Date+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extensions.swift"; sourceTree = "<group>"; };
@@ -119,7 +118,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				28DEF5D5242845190052EF85 /* CloudKit.framework in Frameworks */,
-				2823ACE8244263530003F11A /* LBTATools in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,10 +211,11 @@
 			children = (
 				283CB62424428FB90022314C /* Extensions */,
 				28754681243AD88D00887359 /* BBTabBarController.swift */,
+				2875467F243AD1B300887359 /* IncomeTVC.swift */,
+				288CB7AB24458C0A004756E2 /* IncomeTVCell.swift */,
+				28754683243AE0B000887359 /* IncomeDetailTVC.swift */,
 				2813DAC52428001F00B0FC18 /* ExpensesTVC.swift */,
 				28DEF5D8242893C20052EF85 /* ExpenseDetailTVC.swift */,
-				2875467F243AD1B300887359 /* IncomeTVC.swift */,
-				28754683243AE0B000887359 /* IncomeDetailTVC.swift */,
 				286CB4B9243176B100F63053 /* ExpenseInteractionDelegate.swift */,
 				28754687243AEB5B00887359 /* IncomeInteractionDelegate.swift */,
 				2823ACE424425D3C0003F11A /* BudgetVC.swift */,
@@ -228,7 +227,6 @@
 		2832EFF22434229400C4C4D3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2813DA932427F60D00B0FC18 /* Main.storyboard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -312,7 +310,6 @@
 			);
 			name = BetterBudget;
 			packageProductDependencies = (
-				2823ACE7244263530003F11A /* LBTATools */,
 			);
 			productName = BetterBudget;
 			productReference = 2813DA8A2427F60D00B0FC18 /* BetterBudget.app */;
@@ -387,7 +384,6 @@
 			);
 			mainGroup = 2813DA812427F60D00B0FC18;
 			packageReferences = (
-				2823ACE6244263530003F11A /* XCRemoteSwiftPackageReference "LBTATools" */,
 			);
 			productRefGroup = 2813DA8B2427F60D00B0FC18 /* Products */;
 			projectDirPath = "";
@@ -407,7 +403,6 @@
 			files = (
 				2813DA9D2427F60F00B0FC18 /* LaunchScreen.storyboard in Resources */,
 				2813DA9A2427F60F00B0FC18 /* Assets.xcassets in Resources */,
-				2813DA952427F60D00B0FC18 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +451,7 @@
 				287278C6242B157B00CA1717 /* UnusedCode.swift in Sources */,
 				283CB6282442BB930022314C /* HeaderView.swift in Sources */,
 				283CB62624428FD30022314C /* UIViewControllerExtensions.swift in Sources */,
+				288CB7AC24458C0A004756E2 /* IncomeTVCell.swift in Sources */,
 				28B968632443A5450091D121 /* Extensions+Constraints.swift in Sources */,
 				28754680243AD1B300887359 /* IncomeTVC.swift in Sources */,
 				28754688243AEB5B00887359 /* IncomeInteractionDelegate.swift in Sources */,
@@ -499,14 +495,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		2813DA932427F60D00B0FC18 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2813DA942427F60D00B0FC18 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		2813DA9B2427F60F00B0FC18 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -794,25 +782,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		2823ACE6244263530003F11A /* XCRemoteSwiftPackageReference "LBTATools" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/bhlvoong/LBTATools.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.17;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		2823ACE7244263530003F11A /* LBTATools */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2823ACE6244263530003F11A /* XCRemoteSwiftPackageReference "LBTATools" */;
-			productName = LBTATools;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		2813DA962427F60D00B0FC18 /* BetterBudget.xcdatamodeld */ = {

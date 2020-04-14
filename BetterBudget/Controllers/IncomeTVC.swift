@@ -14,6 +14,8 @@ class IncomeTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     
     weak var incomeTVC: IncomeTVC?
     weak var incomeDetailTVC: IncomeDetailTVC?
+    fileprivate let cellID = "IncomeListCell"
+    
     
     private lazy var dataProvider: IncomeProvider = {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -26,10 +28,13 @@ class IncomeTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.title = "Income"
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 88
-        tableView.tableFooterView = UIView()
+        tableView.register(IncomeTVCell.self, forCellReuseIdentifier: cellID)
+//        tableView.tableFooterView = UIView()
+        
         
         // Observe .didFinishRelevantTransactions to update the UI if needed.
         NotificationCenter.default.addObserver(
@@ -104,7 +109,7 @@ extension IncomeTVC {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "IncomeListCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         
         let income = dataProvider.fetchedResultsController.object(at: indexPath)
         cell.textLabel?.text = income.title
@@ -300,3 +305,4 @@ extension IncomeTVC {
 //    }
     
 }
+
