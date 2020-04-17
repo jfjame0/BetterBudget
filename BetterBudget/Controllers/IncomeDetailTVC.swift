@@ -42,9 +42,8 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UITextViewDel
     
     let notesTextView: UITextView = {
         let textView = UITextView()
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.isScrollEnabled = false
         textView.font = UIFont.systemFont(ofSize: 17)
+        textView.backgroundColor = UIColor.clear
         return textView
     }()
     
@@ -66,6 +65,7 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UITextViewDel
         super.viewDidLoad()
         //            print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
+        
         initUI()
         populateUI()
     }
@@ -80,10 +80,6 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UITextViewDel
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.tintColor = UIColor.lightGray.withAlphaComponent(0.1)
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -119,6 +115,8 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UITextViewDel
             amountTextField.adjustsFontForContentSizeCategory = true
             amountTextField.isUserInteractionEnabled = false
             layout(customView: amountTextField, in: cell)
+            amountTextField.delegate = self
+            amountTextField.keyboardType = .decimalPad
         case 2:
             dateTextField.font = UIFont.preferredFont(forTextStyle: .headline)
             dateTextField.adjustsFontForContentSizeCategory = true
@@ -133,7 +131,10 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UITextViewDel
             notesTextView.font = UIFont.preferredFont(forTextStyle: .headline)
             notesTextView.adjustsFontForContentSizeCategory = true
             notesTextView.isUserInteractionEnabled = false
+            notesTextView.translatesAutoresizingMaskIntoConstraints = false
             layout(customView: notesTextView, in: cell)
+            notesTextView.delegate = self
+            notesTextView.isScrollEnabled = false
             textViewDidChange(notesTextView)
             
         default:
@@ -162,6 +163,11 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UITextViewDel
                 constraint.constant = estimatedSize.height
             }
         }
+        
+        DispatchQueue.main.async {
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+        }
     }
     
     private func initUI() {
@@ -169,8 +175,15 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UITextViewDel
         //build the views for textviews, etc... in here.
         navigationItem.title = income?.title
         navigationItem.rightBarButtonItem = editButtonItem
-        tableView.tableFooterView = UIView()
+    
+        tableView = .init(frame: .zero, style: .insetGrouped)
         tableView.allowsSelection = false
+        tableView.tableFooterView = UIView()
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        tableView.keyboardDismissMode = .onDrag
+        
+        //TODO: - notesTextView Bug
+        // There is a weird bug: When clicking into the notesTextView, the keyboard shows up. When dragging the keyboard disappears, but then the other fields are not clickable for editing.
         
         //MARK: - Date Picker
         let dateToolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 35))
@@ -190,7 +203,6 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UITextViewDel
         datePicker.datePickerMode = .date
         
         //MARK: - Repeats Picker
-        
         repeatsPickerTextField.inputView = repeatsSelection
         repeatsPickerTextField.delegate = self
         
@@ -202,17 +214,13 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UITextViewDel
         pickerToolBar.translatesAutoresizingMaskIntoConstraints = false
         pickerToolBar.sizeToFit()
         //Bar Button
-        let pickerDoneButton = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: #selector(donePickerRepeats))
+        let pickerDoneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePickerRepeats))
         pickerToolBar.setItems([pickerDoneButton], animated: true)
         
         //Assign Toolbar
         repeatsPickerTextField.inputAccessoryView = pickerToolBar
         repeatsSelection.dataSource = self
         repeatsSelection.delegate = self
-        
-        //notesTextView Toolbar
-        
-        
     }
     
     //Date Picker done button pressed
@@ -227,7 +235,6 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UITextViewDel
         if dateTextField.isFirstResponder {
             dateTextField.resignFirstResponder()
         }
-        //        self.view.endEditing(true)
     }
     
     // Repeats Picker
@@ -253,7 +260,6 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UITextViewDel
             repeatsPickerTextField.resignFirstResponder()
         }
         self.view.endEditing(true)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -262,20 +268,6 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UITextViewDel
     
     override func viewWillDisappear(_ animated: Bool) {
     }
-    
- // Here we have the custom inputAccessoryView
-//    override var inputAccessoryView: UIView? {
-//        get {
-//            let containerView = UIView()
-//            containerView.backgroundColor = .red
-//            containerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
-//            return containerView
-//        }
-//    }
-//
-//    override var canBecomeFirstResponder: Bool {
-//        return true
-//    }
 
     // MARK: - Editing
     
@@ -374,7 +366,12 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UITextViewDel
                 return
             }
         }
-        
+
+        //Update title if it has changed
+        func titleDidChange() {
+            navigationItem.title = income.title
+        }
+        titleDidChange()
     }
 }
 
@@ -389,7 +386,6 @@ extension IncomeDetailTVC {
         return true
     }
 }
-
 
 extension IncomeDetailTVC {
     

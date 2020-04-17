@@ -30,12 +30,15 @@ class IncomeTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         navigationItem.leftBarButtonItem = editButtonItem
         navigationItem.title = "Income"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
-
+        
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 88
         tableView.register(RightDetailTVCell.self, forCellReuseIdentifier: cellID)
         tableView.tableFooterView = UIView()
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(IncomeTVC.refreshControlValueChanged(sender:)), for: .valueChanged)
+        tableView.addSubview(refreshControl)
         
         // Observe .didFinishRelevantTransactions to update the UI if needed.
         NotificationCenter.default.addObserver(
@@ -47,9 +50,10 @@ class IncomeTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         
     }
     
-    @IBAction func refreshControlValueChanged(_ sender: UIRefreshControl) {
-        tableView.reloadData()
-        sender.endRefreshing()
+    @objc func refreshControlValueChanged(sender: UIRefreshControl) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            sender.endRefreshing()
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,7 +61,7 @@ class IncomeTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     }
     
     //MARK: - Set Editing
-    //setEditing clears the current selection which expenseDetailTVC relies on.
+    //setEditing clears the current selection which incomeDetailTVC relies on.
     // Don't bother to reserve the selection, just select the first item, if any.
     // Meanwhile, editButtonItem will break the tableView selection after deletions. Reloading tableView after works around the issue.
     
@@ -75,9 +79,9 @@ class IncomeTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let incomeDetail = IncomeDetailTVC()
         if let indexPath = tableView.indexPathForSelectedRow {
-        let income = dataProvider.fetchedResultsController.object(at: indexPath)
-        incomeDetail.income = income
-    }
+            let income = dataProvider.fetchedResultsController.object(at: indexPath)
+            incomeDetail.income = income
+        }
         navigationController?.pushViewController(incomeDetail, animated: true)
     }
     

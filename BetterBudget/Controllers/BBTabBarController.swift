@@ -13,7 +13,7 @@ class BBTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tabBar.tintColor = UIColor.green
+        tabBar.tintColor = UIColor.systemGreen
         
         let appearance = UITabBarAppearance()
         appearance.selectionIndicatorTintColor = UIColor.systemGreen

@@ -27,49 +27,38 @@ class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         navigationItem.leftBarButtonItem = editButtonItem
         navigationItem.title = "Expenses"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
-        
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        //        appearance.backgroundColor = UIColor.systemGreen
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.systemGreen]
-        navigationItem.standardAppearance = appearance
-        navigationItem.scrollEdgeAppearance = appearance
-        navigationItem.compactAppearance = appearance
-        
-        navigationItem.rightBarButtonItem?.tintColor = UIColor.systemGreen
-        navigationItem.leftBarButtonItem?.tintColor = UIColor.systemGreen
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 88
         tableView.register(RightDetailTVCell.self, forCellReuseIdentifier: cellID)
         tableView.tableFooterView = UIView()
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(ExpensesTVC.refreshControlValueChanged(sender:)), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+        
         // Observe .didFinishRelevantTransactions to update the UI if needed.
         NotificationCenter.default.addObserver(
             self, selector: #selector(type(of: self).didFindRelevantTransactions(_:)),
             name: .didFindRelevantTransactions, object: nil)
         
-        
         tableView.reloadData()
         didUpdateExpense(nil)
         
-        
     }
     
-    @IBAction func refreshControlValueChanged(_ sender: UIRefreshControl) {
-        tableView.reloadData()
-        sender.endRefreshing()
+    @objc func refreshControlValueChanged(sender: UIRefreshControl) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            sender.endRefreshing()
+        })
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(animated)
-        
-        
     }
     
     //MARK: - Set Editing
@@ -83,23 +72,18 @@ class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         if !editing {
             tableView.reloadData()
             didUpdateExpense(nil)
-            
         }
-        
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "expenseDetailSegue",
-            let expenseDetailVC = segue.destination as? ExpenseDetailTVC else {
-                return
-        }
-        
-        navigationItem.leftItemsSupplementBackButton = true
-        
+    //MARK: - DidSelectRowAt - showExpenseDetailTVC
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let expenseDetail = ExpenseDetailTVC()
         if let indexPath = tableView.indexPathForSelectedRow {
             let expense = dataProvider.fetchedResultsController.object(at: indexPath)
-            expenseDetailVC.expense = expense
+            expenseDetail.expense = expense
         }
+        navigationController?.pushViewController(expenseDetail, animated: true)
     }
     
     // MARK: - NSFetchedResultsControllerDelegate
@@ -126,7 +110,6 @@ extension ExpensesTVC {
         
         let expense = dataProvider.fetchedResultsController.object(at: indexPath)
         cell.textLabel?.text = expense.title
-        
         
         let formatter = NumberFormatter()
         formatter.minimumFractionDigits = 0
@@ -300,15 +283,12 @@ extension ExpensesTVC: ExpenseInteractionDelegate {
 //MARK: - Action Handlers
 
 extension ExpensesTVC {
-        
-        @objc
-        func addTapped(_ sender: UIBarButtonItem) {
-            dataProvider.addExpense(in: dataProvider.persistentContainer.viewContext) { expense in
-                self.didUpdateExpense(expense)
-                self.resetAndReload(select: expense)
-            }
+    
+    @objc
+    func addTapped(_ sender: UIBarButtonItem) {
+        dataProvider.addExpense(in: dataProvider.persistentContainer.viewContext) { expense in
+            self.didUpdateExpense(expense)
+            self.resetAndReload(select: expense)
         }
     }
-
-
-
+}
