@@ -34,7 +34,7 @@
 		28754684243AE0B000887359 /* IncomeDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28754683243AE0B000887359 /* IncomeDetailTVC.swift */; };
 		28754686243AE40C00887359 /* IncomeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28754685243AE40C00887359 /* IncomeProvider.swift */; };
 		28754688243AEB5B00887359 /* IncomeInteractionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28754687243AEB5B00887359 /* IncomeInteractionDelegate.swift */; };
-		288CB7AC24458C0A004756E2 /* IncomeTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288CB7AB24458C0A004756E2 /* IncomeTVCell.swift */; };
+		288CB7AC24458C0A004756E2 /* RightDetailTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288CB7AB24458C0A004756E2 /* RightDetailTVCell.swift */; };
 		28B968632443A5450091D121 /* Extensions+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B968622443A5450091D121 /* Extensions+Constraints.swift */; };
 		28B968672443AE6C0091D121 /* PaydayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B968662443AE6C0091D121 /* PaydayModel.swift */; };
 		28DD1A4824350C0D00EAB3EF /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DD1A4724350C0D00EAB3EF /* Date+extensions.swift */; };
@@ -99,7 +99,7 @@
 		28754683243AE0B000887359 /* IncomeDetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailTVC.swift; sourceTree = "<group>"; };
 		28754685243AE40C00887359 /* IncomeProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomeProvider.swift; sourceTree = "<group>"; };
 		28754687243AEB5B00887359 /* IncomeInteractionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomeInteractionDelegate.swift; sourceTree = "<group>"; };
-		288CB7AB24458C0A004756E2 /* IncomeTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeTVCell.swift; sourceTree = "<group>"; };
+		288CB7AB24458C0A004756E2 /* RightDetailTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightDetailTVCell.swift; sourceTree = "<group>"; };
 		28B968622443A5450091D121 /* Extensions+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+Constraints.swift"; sourceTree = "<group>"; };
 		28B968662443AE6C0091D121 /* PaydayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaydayModel.swift; sourceTree = "<group>"; };
 		28DD1A4724350C0D00EAB3EF /* Date+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extensions.swift"; sourceTree = "<group>"; };
@@ -212,7 +212,7 @@
 				283CB62424428FB90022314C /* Extensions */,
 				28754681243AD88D00887359 /* BBTabBarController.swift */,
 				2875467F243AD1B300887359 /* IncomeTVC.swift */,
-				288CB7AB24458C0A004756E2 /* IncomeTVCell.swift */,
+				288CB7AB24458C0A004756E2 /* RightDetailTVCell.swift */,
 				28754683243AE0B000887359 /* IncomeDetailTVC.swift */,
 				2813DAC52428001F00B0FC18 /* ExpensesTVC.swift */,
 				28DEF5D8242893C20052EF85 /* ExpenseDetailTVC.swift */,
@@ -451,7 +451,7 @@
 				287278C6242B157B00CA1717 /* UnusedCode.swift in Sources */,
 				283CB6282442BB930022314C /* HeaderView.swift in Sources */,
 				283CB62624428FD30022314C /* UIViewControllerExtensions.swift in Sources */,
-				288CB7AC24458C0A004756E2 /* IncomeTVCell.swift in Sources */,
+				288CB7AC24458C0A004756E2 /* RightDetailTVCell.swift in Sources */,
 				28B968632443A5450091D121 /* Extensions+Constraints.swift in Sources */,
 				28754680243AD1B300887359 /* IncomeTVC.swift in Sources */,
 				28754688243AEB5B00887359 /* IncomeInteractionDelegate.swift in Sources */,

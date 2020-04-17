@@ -14,8 +14,7 @@ class IncomeTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     
     weak var incomeTVC: IncomeTVC?
     weak var incomeDetailTVC: IncomeDetailTVC?
-    fileprivate let cellID = "IncomeListCell"
-    
+    fileprivate let cellID = "RightDetailTVCell"
     
     private lazy var dataProvider: IncomeProvider = {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -27,13 +26,15 @@ class IncomeTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         navigationItem.leftBarButtonItem = editButtonItem
         navigationItem.title = "Income"
-        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 88
-        tableView.register(IncomeTVCell.self, forCellReuseIdentifier: cellID)
-//        tableView.tableFooterView = UIView()
+        tableView.register(RightDetailTVCell.self, forCellReuseIdentifier: cellID)
+        tableView.tableFooterView = UIView()
         
         
         // Observe .didFinishRelevantTransactions to update the UI if needed.
@@ -51,12 +52,8 @@ class IncomeTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         sender.endRefreshing()
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(animated)
-        
-        
     }
     
     //MARK: - Set Editing
@@ -70,23 +67,18 @@ class IncomeTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         if !editing {
             tableView.reloadData()
             didUpdateIncome(nil)
-            
         }
-        
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "incomeDetailSegue",
-            let incomeDetailTVC = segue.destination as? IncomeDetailTVC else {
-                return
-        }
-        
-        navigationItem.leftItemsSupplementBackButton = true
-        
+    //MARK: - DidSelectRowAt - showIncomeDetailTVC
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let incomeDetail = IncomeDetailTVC()
         if let indexPath = tableView.indexPathForSelectedRow {
-            let income = dataProvider.fetchedResultsController.object(at: indexPath)
-            incomeDetailTVC.income = income
-        }
+        let income = dataProvider.fetchedResultsController.object(at: indexPath)
+        incomeDetail.income = income
+    }
+        navigationController?.pushViewController(incomeDetail, animated: true)
     }
     
     // MARK: - NSFetchedResultsControllerDelegate
@@ -110,10 +102,10 @@ extension IncomeTVC {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
+        cell.accessoryType = .disclosureIndicator
         
         let income = dataProvider.fetchedResultsController.object(at: indexPath)
         cell.textLabel?.text = income.title
-        
         
         let formatter = NumberFormatter()
         formatter.minimumFractionDigits = 0
@@ -287,22 +279,12 @@ extension IncomeTVC: IncomeInteractionDelegate {
 //MARK: - Action Handlers
 
 extension IncomeTVC {
-
-    @IBAction func addIncome(_ sender: UIBarButtonItem) {
+    
+    @objc
+    func addTapped(_ sender: UIBarButtonItem) {
         dataProvider.addIncome(in: dataProvider.persistentContainer.viewContext) { income in
             self.didUpdateIncome(income)
             self.resetAndReload(select: income)
         }
     }
-    
-    
-//    @IBAction func addExpense(_ sender: UIBarButtonItem) {
-//        dataProvider.addExpense(in: dataProvider.persistentContainer.viewContext) { expense in
-//            self.didUpdateExpense(expense)
-//            self.resetAndReload(select: expense)
-//        }
-//
-//    }
-    
 }
-

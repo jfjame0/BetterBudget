@@ -14,6 +14,7 @@ class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     
     weak var expensesTVC: ExpensesTVC?
     weak var expenseDetailTVC: ExpenseDetailTVC?
+    fileprivate let cellID = "RightDetailTVCell"
     
     private lazy var dataProvider: ExpenseProvider = {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -27,9 +28,23 @@ class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.title = "Expenses"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        //        appearance.backgroundColor = UIColor.systemGreen
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.systemGreen]
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        navigationItem.compactAppearance = appearance
+        
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.systemGreen
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.systemGreen
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 88
+        tableView.register(RightDetailTVCell.self, forCellReuseIdentifier: cellID)
         tableView.tableFooterView = UIView()
         
         // Observe .didFinishRelevantTransactions to update the UI if needed.
@@ -107,7 +122,7 @@ extension ExpensesTVC {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ExpensesListCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         
         let expense = dataProvider.fetchedResultsController.object(at: indexPath)
         cell.textLabel?.text = expense.title
@@ -285,16 +300,15 @@ extension ExpensesTVC: ExpenseInteractionDelegate {
 //MARK: - Action Handlers
 
 extension ExpensesTVC {
-    //MARK: - addExpense needs to create the new expense, and then open that expense in ExpenseDetailTVC.
-    @IBAction func addExpense(_ sender: UIBarButtonItem) {
-        dataProvider.addExpense(in: dataProvider.persistentContainer.viewContext) { expense in
-            self.didUpdateExpense(expense)
-            self.resetAndReload(select: expense)
-        }
         
+        @objc
+        func addTapped(_ sender: UIBarButtonItem) {
+            dataProvider.addExpense(in: dataProvider.persistentContainer.viewContext) { expense in
+                self.didUpdateExpense(expense)
+                self.resetAndReload(select: expense)
+            }
+        }
     }
-    
-}
 
 
 

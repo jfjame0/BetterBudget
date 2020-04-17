@@ -246,20 +246,230 @@
  }
  */
  
+ let titleHeaderLabel: UILabel = {
+     let label = UILabel()
+     label.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
+     label.translatesAutoresizingMaskIntoConstraints = false
+     label.text = "Title"
+     label.textAlignment = .left
+     //        label.textColor = UIColor.gray
+     //        label.font = label.font?.withSize(17)
+     return label
+ }()
+ 
+ let titleTextField: UITextField = {
+     let textField = UITextField()
+     textField.translatesAutoresizingMaskIntoConstraints = false
+     textField.font = UIFont.systemFont(ofSize: 17)
+     //        textField.text = "titleTextField Test"
+     return textField
+ }()
+ 
+ let amountHeaderLabel: UILabel = {
+     let label = UILabel()
+     label.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
+     label.translatesAutoresizingMaskIntoConstraints = false
+     label.text = "Amount"
+     label.textAlignment = .left
+     return label
+ }()
+ 
+ let amountTextField: UITextField = {
+     let textField = UITextField()
+     textField.translatesAutoresizingMaskIntoConstraints = false
+     textField.font = UIFont.systemFont(ofSize: 17)
+     //        textField.text = "$ 150.00 amountTextField Test"
+     return textField
+ }()
+ 
+ let dateHeaderLabel: UILabel = {
+     let label = UILabel()
+     label.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
+     label.translatesAutoresizingMaskIntoConstraints = false
+     label.text = "Date"
+     label.textAlignment = .left
+     return label
+ }()
+ 
+ let dateTextField: UITextField = {
+     let textField = UITextField()
+     textField.translatesAutoresizingMaskIntoConstraints = false
+     textField.font = UIFont.systemFont(ofSize: 17)
+     //        textField.text = "11/26/2020 Test"
+     return textField
+ }()
+ 
+ let repeatsHeaderLabel: UILabel = {
+     let label = UILabel()
+     label.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
+     label.translatesAutoresizingMaskIntoConstraints = false
+     label.text = "Repeats"
+     label.textAlignment = .left
+     return label
+ }()
+ 
+ let repeatsPickerTextField: UITextField = {
+     let textField = UITextField()
+     textField.translatesAutoresizingMaskIntoConstraints = false
+     textField.font = UIFont.systemFont(ofSize: 17)
+     //        textField.text = "Monthly Test"
+     return textField
+ }()
+ 
+ let notesHeaderLabel: UILabel = {
+     let label = UILabel()
+     label.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
+     label.translatesAutoresizingMaskIntoConstraints = false
+     label.text = "Notes"
+     label.textAlignment = .left
+     return label
+ }()
+ 
+ let notesTextView: UITextView = {
+     let textView = UITextView()
+     textView.translatesAutoresizingMaskIntoConstraints = false
+     textView.font = UIFont.systemFont(ofSize: 17)
+     //        textView.text = "Some notes are written in here."
+     return textView
+ }()
  
  
  
+ contentView.addSubview(titleHeaderLabel)
+ view.addSubview(titleTextField)
+ view.addSubview(amountHeaderLabel)
+ view.addSubview(amountTextField)
+ view.addSubview(dateHeaderLabel)
+ view.addSubview(dateTextField)
+ view.addSubview(repeatsHeaderLabel)
+ view.addSubview(repeatsPickerTextField)
+ view.addSubview(notesHeaderLabel)
+ view.addSubview(notesTextView)
+ 
+ //Set contstraints
+ [
+     titleTextField.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
+     titleTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+     titleTextField.leadingAnchor.constraint(equalTo: view.trailingAnchor),
+     titleTextField.heightAnchor.constraint(equalToConstant: 44)
+     ].forEach{ $0.isActive = true }
+ 
+ [
+     amountTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+     amountTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+     amountTextField.leadingAnchor.constraint(equalTo: view.trailingAnchor),
+     amountTextField.heightAnchor.constraint(equalToConstant: 44)
+     ].forEach{ $0.isActive = true }
+ 
+ [
+     dateTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+     dateTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+     dateTextField.leadingAnchor.constraint(equalTo: view.trailingAnchor),
+     dateTextField.heightAnchor.constraint(equalToConstant: 44)
+     ].forEach{ $0.isActive = true }
+ 
+ [
+     repeatsPickerTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+     repeatsPickerTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+     repeatsPickerTextField.leadingAnchor.constraint(equalTo: view.trailingAnchor),
+     repeatsPickerTextField.heightAnchor.constraint(equalToConstant: 44)
+     ].forEach{ $0.isActive = true }
+ 
+ [
+     notesTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+     notesTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+     notesTextView.leadingAnchor.constraint(equalTo: view.trailingAnchor),
+     notesTextView.heightAnchor.constraint(equalToConstant: 44)
+     ].forEach{ $0.isActive = true }
  
  
+ override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+         switch section {
+         case 0:
+             if let titleHeader = titleHeaderLabel.text {
+                 return titleHeader
+             }
+         case 1:
+             if let amountHeader = amountHeaderLabel.text {
+                 return amountHeader
+             }
+         case 2:
+             if let dateHeader = dateHeaderLabel.text {
+                 return dateHeader
+             }
+         case 3:
+             if let repeatsHeader = repeatsHeaderLabel.text {
+                 return repeatsHeader
+             }
+         case 4:
+             if let notesHeader = notesHeaderLabel.text {
+                 return notesHeader
+             }
+         default:
+             return "Default"
+         }
+         return "Section: \(String())"
+     }
+     
+ //    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+ //        switch section {
+ //        case 0: return titleHeaderLabel
+ //        case 1: return amountHeaderLabel
+ //        case 2: return dateHeaderLabel
+ //        case 3: return repeatsHeaderLabel
+ //        case 4: return notesHeaderLabel
+ //        default:
+ //            return nil
+ //        }
+ //    }
  
  
+ override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+         let cell = UITableViewCell()
+         
+         switch indexPath.row {
+         case 0:
+             cell.contentView.addSubview(titleTextField)
+         case 1:
+             cell.contentView.addSubview(amountTextField)
+         case 2:
+             cell.contentView.addSubview(dateTextField)
+         case 3:
+             cell.contentView.addSubview(repeatsPickerTextField)
+         case 4:
+             cell.contentView.addSubview(notesTextView)
+         default:
+             print("Default triggered in cellForRowAt indexPath")
+ //            cell.contentView.addSubview(UIView()) //Can I do this?
+         }
+         return cell
+     }
  
  
- 
- 
- 
- 
- 
+             //            titleTextField.leadingAnchor.constraint(equalTo: cell.contentView.layoutMarginsGuide.leadingAnchor).isActive = true
+             //            titleTextField.trailingAnchor.constraint(equalTo: cell.contentView.layoutMarginsGuide.trailingAnchor).isActive = true
+             //            titleTextField.firstBaselineAnchor.constraint(equalToSystemSpacingBelow: cell.contentView.layoutMarginsGuide.topAnchor, multiplier: 1).isActive = true
+             //            cell.contentView.layoutMarginsGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: titleTextField.lastBaselineAnchor, multiplier: 1).isActive = true
+             
+ //            amountTextField.leadingAnchor.constraint(equalTo: cell.contentView.layoutMarginsGuide.leadingAnchor).isActive = true
+ //            amountTextField.trailingAnchor.constraint(equalTo: cell.contentView.layoutMarginsGuide.trailingAnchor).isActive = true
+ //            amountTextField.firstBaselineAnchor.constraint(equalToSystemSpacingBelow: cell.contentView.layoutMarginsGuide.topAnchor, multiplier: 1).isActive = true
+ //            cell.contentView.layoutMarginsGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: amountTextField.lastBaselineAnchor, multiplier: 1).isActive = true
+             
+             //            dateTextField.leadingAnchor.constraint(equalTo: cell.contentView.layoutMarginsGuide.leadingAnchor).isActive = true
+             //            dateTextField.trailingAnchor.constraint(equalTo: cell.contentView.layoutMarginsGuide.trailingAnchor).isActive = true
+             //            dateTextField.firstBaselineAnchor.constraint(equalToSystemSpacingBelow: cell.contentView.layoutMarginsGuide.topAnchor, multiplier: 1).isActive = true
+             //            cell.contentView.layoutMarginsGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: dateTextField.lastBaselineAnchor, multiplier: 1).isActive = true
+             
+             //            repeatsPickerTextField.leadingAnchor.constraint(equalTo: cell.contentView.layoutMarginsGuide.leadingAnchor).isActive = true
+             //            repeatsPickerTextField.trailingAnchor.constraint(equalTo: cell.contentView.layoutMarginsGuide.trailingAnchor).isActive = true
+             //            repeatsPickerTextField.firstBaselineAnchor.constraint(equalToSystemSpacingBelow: cell.contentView.layoutMarginsGuide.topAnchor, multiplier: 1).isActive = true
+             //            cell.contentView.layoutMarginsGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: repeatsPickerTextField.lastBaselineAnchor, multiplier: 1).isActive = true
+             
+             //            notesTextField.leadingAnchor.constraint(equalTo: cell.contentView.layoutMarginsGuide.leadingAnchor).isActive = true
+             //            notesTextField.trailingAnchor.constraint(equalTo: cell.contentView.layoutMarginsGuide.trailingAnchor).isActive = true
+             //            notesTextField.firstBaselineAnchor.constraint(equalToSystemSpacingBelow: cell.contentView.layoutMarginsGuide.topAnchor, multiplier: 1).isActive = true
+             //            cell.contentView.layoutMarginsGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: notesTextField.lastBaselineAnchor, multiplier: 1).isActive = true
  
  
  */

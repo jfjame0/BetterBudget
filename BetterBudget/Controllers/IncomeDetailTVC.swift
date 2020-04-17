@@ -10,26 +10,54 @@ import UIKit
 import CoreData
 import CloudKit
 
-class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, NSFetchedResultsControllerDelegate {
+class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource, NSFetchedResultsControllerDelegate {
     
-    @IBOutlet var table: UITableView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var amountTextField: UITextField!
-    @IBOutlet weak var dateTextField: UITextField!
-    @IBOutlet weak var repeatsPickerTextField: UITextField!
-    @IBOutlet weak var notesTextView: UITextView!
-
+    let titleTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.font = UIFont.systemFont(ofSize: 17)
+        return textField
+    }()
+    
+    let amountTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.font = UIFont.systemFont(ofSize: 17)
+        return textField
+    }()
+    
+    let dateTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.font = UIFont.systemFont(ofSize: 17)
+        return textField
+    }()
+    
+    let repeatsPickerTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.font = UIFont.systemFont(ofSize: 17)
+        return textField
+    }()
+    
+    let notesTextView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.isScrollEnabled = false
+        textView.font = UIFont.systemFont(ofSize: 17)
+        return textView
+    }()
+    
     weak var delegate: IncomeInteractionDelegate?
     
     private lazy var dataProvider: IncomeProvider = {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let provider = IncomeProvider(with: appDelegate!.coreDataStack.persistentContainer,
-                                       fetchedResultsControllerDelegate: self)
+                                      fetchedResultsControllerDelegate: self)
         return provider
     }()
     
     var income: Income?
-//    let payDatePickerSelection = UIDatePicker()
     var repeatsSelection = UIPickerView()
     let datePicker: UIDatePicker = UIDatePicker()
     var repeatsPickerData: [String] = ["None", "Weekly", "2 Weeks", "Monthly", "2 Months", "6 Months", "Yearly"]
@@ -40,57 +68,151 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerViewD
         
         initUI()
         populateUI()
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 5
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = UIColor.lightGray.withAlphaComponent(0.1)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let sectionHeader = UILabel()
+        switch section {
+        case 0:
+            sectionHeader.text = "Title"
+        case 1:
+            sectionHeader.text = "Amount"
+        case 2:
+            sectionHeader.text = "Pay Date"
+        case 3:
+            sectionHeader.text = "Repeats"
+        case 4:
+            sectionHeader.text = "Notes"
+        default:
+            print("Default Triggered")
+        }
+        return sectionHeader.text
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
         
+        switch indexPath.section {
+        case 0:
+            titleTextField.font = UIFont.preferredFont(forTextStyle: .headline)
+            titleTextField.adjustsFontForContentSizeCategory = true
+            titleTextField.isUserInteractionEnabled = false
+            layout(customView: titleTextField, in: cell)
+        case 1:
+            amountTextField.font = UIFont.preferredFont(forTextStyle: .headline)
+            amountTextField.adjustsFontForContentSizeCategory = true
+            amountTextField.isUserInteractionEnabled = false
+            layout(customView: amountTextField, in: cell)
+        case 2:
+            dateTextField.font = UIFont.preferredFont(forTextStyle: .headline)
+            dateTextField.adjustsFontForContentSizeCategory = true
+            dateTextField.isUserInteractionEnabled = false
+            layout(customView: dateTextField, in: cell)
+        case 3:
+            repeatsPickerTextField.font = UIFont.preferredFont(forTextStyle: .headline)
+            repeatsPickerTextField.adjustsFontForContentSizeCategory = true
+            repeatsPickerTextField.isUserInteractionEnabled = false
+            layout(customView: repeatsPickerTextField, in: cell)
+        case 4:
+            notesTextView.font = UIFont.preferredFont(forTextStyle: .headline)
+            notesTextView.adjustsFontForContentSizeCategory = true
+            notesTextView.isUserInteractionEnabled = false
+            layout(customView: notesTextView, in: cell)
+            textViewDidChange(notesTextView)
+            
+        default:
+            print("Default triggered in cellForRowAt indexPath")
+        }
+        return cell
+    }
+
+    private func layout(customView: UIView, in cell: UITableViewCell) {
+        cell.contentView.addSubview(customView)
+        
+        NSLayoutConstraint.activate([
+            customView.leadingAnchor.constraint(equalTo: cell.contentView.layoutMarginsGuide.leadingAnchor),
+            customView.trailingAnchor.constraint(equalTo: cell.contentView.layoutMarginsGuide.trailingAnchor),
+            customView.topAnchor.constraint(equalTo: cell.contentView.layoutMarginsGuide.topAnchor, constant: 8),
+            customView.bottomAnchor.constraint(equalTo: cell.contentView.layoutMarginsGuide.bottomAnchor, constant: -8)
+        ])
+    }
+    
+    //Height change when more text is added to notesTextView
+    func textViewDidChange(_ textView: UITextView) {
+        let size = CGSize(width: view.frame.width, height: .infinity)
+        let estimatedSize = notesTextView.sizeThatFits(size)
+        notesTextView.constraints.forEach { (constraint) in
+            if constraint.firstAttribute == .height {
+                constraint.constant = estimatedSize.height
+            }
+        }
     }
     
     private func initUI() {
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
-        self.navigationItem.title = income?.title
+        
+        //build the views for textviews, etc... in here.
+        navigationItem.title = income?.title
+        navigationItem.rightBarButtonItem = editButtonItem
+        tableView.tableFooterView = UIView()
+        tableView.allowsSelection = false
         
         //MARK: - Date Picker
-        let dateToolBar = UIToolbar()
+        let dateToolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 35))
         dateToolBar.barStyle = UIBarStyle.default
         dateToolBar.isTranslucent = true
         dateToolBar.tintColor = UIColor.green
+        dateToolBar.translatesAutoresizingMaskIntoConstraints = false
         dateToolBar.sizeToFit()
-        
         //Bar Button
         let dateDoneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePickerDate))
         dateToolBar.setItems([dateDoneButton], animated: true)
         
         //Assign Toolbar
         dateTextField.inputAccessoryView = dateToolBar
-        
         // Assign Date picker to textfield
         dateTextField.inputView = datePicker
         datePicker.datePickerMode = .date
-        // testing .setDate below with captureDate to see if it poulates.
         
         //MARK: - Repeats Picker
         
-        //        let frame = self.view.frame
-        //        let repeatsFrame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: 216)
-        //        repeatsSelection = UIPickerView(frame: repeatsFrame)
-        //        repeatsSelection = UIPickerView()
         repeatsPickerTextField.inputView = repeatsSelection
         repeatsPickerTextField.delegate = self
         
         //Picker Toolbar
-        let pickerToolBar = UIToolbar()
+        let pickerToolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 35))
         pickerToolBar.barStyle = UIBarStyle.default
         pickerToolBar.isTranslucent = true
         pickerToolBar.tintColor = UIColor.green
+        pickerToolBar.translatesAutoresizingMaskIntoConstraints = false
         pickerToolBar.sizeToFit()
-        
         //Bar Button
-        let pickerDoneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePickerRepeats))
+        let pickerDoneButton = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: #selector(donePickerRepeats))
         pickerToolBar.setItems([pickerDoneButton], animated: true)
         
         //Assign Toolbar
         repeatsPickerTextField.inputAccessoryView = pickerToolBar
-        
         repeatsSelection.dataSource = self
         repeatsSelection.delegate = self
+        
+        //notesTextView Toolbar
+        
+        
     }
     
     //Date Picker done button pressed
@@ -105,7 +227,6 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerViewD
         if dateTextField.isFirstResponder {
             dateTextField.resignFirstResponder()
         }
-        
         //        self.view.endEditing(true)
     }
     
@@ -137,35 +258,44 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerViewD
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        
     }
     
+ // Here we have the custom inputAccessoryView
+//    override var inputAccessoryView: UIView? {
+//        get {
+//            let containerView = UIView()
+//            containerView.backgroundColor = .red
+//            containerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
+//            return containerView
+//        }
+//    }
+//
+//    override var canBecomeFirstResponder: Bool {
+//        return true
+//    }
+
     // MARK: - Editing
     
     override func setEditing(_ editing: Bool, animated: Bool) {
-        
         // before calling super.setEditing to recognize the switch to Done, resign the first responder if needed and make sure the title is valid.
-        
         if !editing {
-            
             if titleTextField.isFirstResponder {
                 titleTextField.resignFirstResponder()
             }
             if amountTextField.isFirstResponder {
                 amountTextField.resignFirstResponder()
             }
-            if notesTextView.isFirstResponder {
-                notesTextView.resignFirstResponder()
-            }
             if dateTextField.isFirstResponder {
                 dateTextField.resignFirstResponder()
             }
             if repeatsPickerTextField.isFirstResponder {
                 repeatsPickerTextField.resignFirstResponder()
+            }
+            if notesTextView.isFirstResponder {
+                notesTextView.resignFirstResponder()
             }
             
             if let title = titleTextField.text, title.isEmpty {
@@ -192,7 +322,6 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerViewD
                 present(alert, animated: true)
                 return
             }
-            
             if let repeats = repeatsPickerTextField.text, repeats.isEmpty {
                 let alert = UIAlertController(title: "Warning",
                                               message: "The income repeats field is empty",
@@ -201,24 +330,22 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerViewD
                 present(alert, animated: true)
                 return
             }
-            
         }
         
         //Call super's implementation to switch the status to editing.
         super.setEditing(editing, animated: false)
         
         //Update the UI based on the editing state.
-        // All fields are locked with isUserInteractionEnabled set to false in the storyboard, until super.setEditing is called, then we set it to true.
         titleTextField.isUserInteractionEnabled = true
         titleTextField.isEnabled = editing
         amountTextField.isUserInteractionEnabled = true
         amountTextField.isEnabled = editing
-        notesTextView.isUserInteractionEnabled = true
-        notesTextView.isEditable = editing
         dateTextField.isUserInteractionEnabled = true
         dateTextField.isEnabled = editing
         repeatsPickerTextField.isUserInteractionEnabled = true
         repeatsPickerTextField.isEnabled = editing
+        notesTextView.isUserInteractionEnabled = true
+        notesTextView.isEditable = editing
         
         //If the UI is entering the editing state, simply return
         guard !isEditing, let income = income else { return }
@@ -247,6 +374,7 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UIPickerViewD
                 return
             }
         }
+        
     }
 }
 
@@ -261,6 +389,7 @@ extension IncomeDetailTVC {
         return true
     }
 }
+
 
 extension IncomeDetailTVC {
     
