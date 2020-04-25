@@ -30,7 +30,7 @@ extension DateFormatter {
     
     static let fullDateFormatter: DateFormatter = {
        var formatter = DateFormatter()
-        formatter.dateFormat = "y-MM-dd"
+        formatter.dateFormat = "dd-MM-yy"
         return formatter
     }()
     

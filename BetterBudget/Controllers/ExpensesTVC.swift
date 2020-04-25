@@ -52,6 +52,8 @@ class ExpensesTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     }
     
     @objc func refreshControlValueChanged(sender: UIRefreshControl) {
+        tableView.reloadData()
+//        self.tableView.refreshControl?.endRefreshing()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
             sender.endRefreshing()
         })

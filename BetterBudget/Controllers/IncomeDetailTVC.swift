@@ -59,11 +59,12 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UITextViewDel
     var income: Income?
     var repeatsSelection = UIPickerView()
     let datePicker: UIDatePicker = UIDatePicker()
+    //TODO: - Add "1st & 15th" to the repeatsPickerData[]
     var repeatsPickerData: [String] = ["None", "Weekly", "2 Weeks", "Monthly", "2 Months", "6 Months", "Yearly"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //            print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
         
         initUI()
@@ -179,7 +180,7 @@ class IncomeDetailTVC: UITableViewController, UITextFieldDelegate, UITextViewDel
         tableView = .init(frame: .zero, style: .insetGrouped)
         tableView.allowsSelection = false
         tableView.tableFooterView = UIView()
-        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        tableView.separatorStyle = .none
         tableView.keyboardDismissMode = .onDrag
         
         //TODO: - notesTextView Bug

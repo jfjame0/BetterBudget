@@ -5,7 +5,7 @@
 //  Created by JOHN JAMES III on 4/1/20.
 //  Copyright © 2020 JOHN JAMES III. All rights reserved.
 //
-
+/*
 import Foundation
 
 extension Date {
@@ -58,6 +58,11 @@ extension Date {
         return day
     }
     
+    func week() -> Int {
+        let week = Calendar.current.component(.weekOfYear, from: self)
+        return week
+    }
+    
     func month() -> Int {
         let month = Calendar.current.component(.month, from: self)
         return month
@@ -71,7 +76,7 @@ extension Date {
     func startOfMonth() -> Date {
         let day = Calendar.current.startOfDay(for: self)
         return Calendar.current.date(
-        from: Calendar.current.dateComponents([.year, .month], from: day))!
+            from: Calendar.current.dateComponents([.year, .month], from: day))!
     }
     
     func endOfMonth() -> Date {
@@ -83,7 +88,7 @@ extension Date {
         dateFormatter.timeStyle = DateFormatter.Style.none
         dateFormatter.dateStyle = DateFormatter.Style.short
         let dateString = dateFormatter.string(from: self)
-    
+        
         return dateFormatter.date(from: dateString)!
     }
     
@@ -103,7 +108,7 @@ extension Date {
         let range = calendar.range(of: .day, in: .month, for: date)!
         return range.count
     }
-                                 
+    
     func dayRepresentation() -> String {
         let calendar = Calendar.current
         if calendar.isDateInToday(self) {
@@ -121,3 +126,4 @@ extension Date {
         }
     }
 }
+*/

@@ -472,5 +472,103 @@
              //            cell.contentView.layoutMarginsGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: notesTextField.lastBaselineAnchor, multiplier: 1).isActive = true
  
  
+ 
+ 
+ 
+ 
+ 
+ //           var fetchedPayDates: Date?
+            
+         
+ //           do {
+ //               let fetchRequest: NSFetchRequest<Income> = Income.createFetchRequest()
+ //               let result: [Income] = try container.viewContext.fetch(fetchRequest)
+ //               fetchedPayDates = result.first?.payDate ?? Date()
+ //        for income in result {
+ //                       print(income.payDate!)
+ //                   }
+ //
+ //               } catch {
+ //                   print("Error loading Income Date")
+ //               }
+ //
+ //               return fetchedPayDates ?? Date()
+ 
+ 
+ 
+ 
+ 
+ func calculateRepeats() {
+        
+        let repeatsFetch = dataProvider.fetchedResultsController.fetchedObjects
+        
+        let components = NSDateComponents()
+        
+        if let frequency = repeatsFetch {
+            
+            for repeats in frequency {
+                if repeats.repeats == "None" {
+                    components.day = 0
+                } else if repeats.repeats == "Weekly" {
+                components.weekOfYear = 1
+                } else if repeats.repeats == "2-Weeks" {
+                components.weekOfYear = 2
+                } else if repeats.repeats == "Monthly" {
+                components.month = 1
+                } else if repeats.repeats == "2 Months" {
+                components.month = 2
+                } else if repeats.repeats == "6 Months" {
+                components.month = 6
+                } else { repeats.repeats = "Yearly"
+                components.year = 1
+                }
+                print(components)
+            }
+
+        }
+        
+    }
+ 
+ 
+ 
+ func grabAllPersons() {
+     var pp: [CD_Person] = []
+     do {
+         let r = NSFetchRequest<NSFetchRequestResult>(entityName: "CD_Person")
+         let f = try core.container.viewContext.fetch(r)
+         pp = f as! [CD_Person]
+     } catch let error as NSError {
+         print("woe grabAllPersons \(error)")
+     }
+
+     for p: CD_Person in pp {
+         print(" >> \(p.firstName)")
+     }
+ }
+ 
+ 
+ 
+ 
+ var payDayDate: Date {
+     get {
+         guard let number = payday.payDate else {
+             fatalError("Cannot convert payDate")
+         }
+         return number
+     }
+     set {
+         createdPaydate.append(newValue)
+     }
+ }
+
+ for paydays in createdPaydate {
+     
+ }
+
+ 
+ 
  */
+
+
+
 

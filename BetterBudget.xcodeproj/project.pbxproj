@@ -20,7 +20,6 @@
 		2823ACE524425D3C0003F11A /* BudgetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2823ACE424425D3C0003F11A /* BudgetVC.swift */; };
 		2832EFF42434230400C4C4D3 /* PickerBasedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2832EFF32434230400C4C4D3 /* PickerBasedTextField.swift */; };
 		283CB62624428FD30022314C /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283CB62524428FD30022314C /* UIViewControllerExtensions.swift */; };
-		283CB6282442BB930022314C /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283CB6272442BB930022314C /* HeaderView.swift */; };
 		283CB62A2442F5790022314C /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283CB6292442F5790022314C /* Extension+UIView.swift */; };
 		2842908D243749BB0034D1F3 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2842908C243749BB0034D1F3 /* CoreDataManager.swift */; };
 		286CB4B024312AB200F63053 /* CoreData+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286CB4AF24312AB200F63053 /* CoreData+Convenience.swift */; };
@@ -34,9 +33,9 @@
 		28754684243AE0B000887359 /* IncomeDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28754683243AE0B000887359 /* IncomeDetailTVC.swift */; };
 		28754686243AE40C00887359 /* IncomeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28754685243AE40C00887359 /* IncomeProvider.swift */; };
 		28754688243AEB5B00887359 /* IncomeInteractionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28754687243AEB5B00887359 /* IncomeInteractionDelegate.swift */; };
+		287ACDB1244AB35C00626A73 /* BudgetTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287ACDB0244AB35C00626A73 /* BudgetTVCell.swift */; };
 		288CB7AC24458C0A004756E2 /* RightDetailTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288CB7AB24458C0A004756E2 /* RightDetailTVCell.swift */; };
 		28B968632443A5450091D121 /* Extensions+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B968622443A5450091D121 /* Extensions+Constraints.swift */; };
-		28B968672443AE6C0091D121 /* PaydayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B968662443AE6C0091D121 /* PaydayModel.swift */; };
 		28DD1A4824350C0D00EAB3EF /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DD1A4724350C0D00EAB3EF /* Date+extensions.swift */; };
 		28DD1A4A24350C2100EAB3EF /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DD1A4924350C2100EAB3EF /* DateFormatter+Extensions.swift */; };
 		28DD1A4C24350C3400EAB3EF /* Number+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DD1A4B24350C3400EAB3EF /* Number+Extensions.swift */; };
@@ -45,6 +44,7 @@
 		28DD1A5224350F4100EAB3EF /* BBMonth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DD1A5124350F4100EAB3EF /* BBMonth.swift */; };
 		28DEF5D5242845190052EF85 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28DEF5D4242845190052EF85 /* CloudKit.framework */; };
 		28DEF5D9242893C20052EF85 /* ExpenseDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DEF5D8242893C20052EF85 /* ExpenseDetailTVC.swift */; };
+		28E2E744244B9FDF00356326 /* Expense+CoreDateaProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E2E743244B9FDF00356326 /* Expense+CoreDateaProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,7 +85,6 @@
 		2823ACE424425D3C0003F11A /* BudgetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetVC.swift; sourceTree = "<group>"; };
 		2832EFF32434230400C4C4D3 /* PickerBasedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerBasedTextField.swift; sourceTree = "<group>"; };
 		283CB62524428FD30022314C /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
-		283CB6272442BB930022314C /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		283CB6292442F5790022314C /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
 		2842908C243749BB0034D1F3 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		286CB4AF24312AB200F63053 /* CoreData+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+Convenience.swift"; sourceTree = "<group>"; };
@@ -99,9 +98,9 @@
 		28754683243AE0B000887359 /* IncomeDetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailTVC.swift; sourceTree = "<group>"; };
 		28754685243AE40C00887359 /* IncomeProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomeProvider.swift; sourceTree = "<group>"; };
 		28754687243AEB5B00887359 /* IncomeInteractionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomeInteractionDelegate.swift; sourceTree = "<group>"; };
+		287ACDB0244AB35C00626A73 /* BudgetTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetTVCell.swift; sourceTree = "<group>"; };
 		288CB7AB24458C0A004756E2 /* RightDetailTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightDetailTVCell.swift; sourceTree = "<group>"; };
 		28B968622443A5450091D121 /* Extensions+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+Constraints.swift"; sourceTree = "<group>"; };
-		28B968662443AE6C0091D121 /* PaydayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaydayModel.swift; sourceTree = "<group>"; };
 		28DD1A4724350C0D00EAB3EF /* Date+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extensions.swift"; sourceTree = "<group>"; };
 		28DD1A4924350C2100EAB3EF /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
 		28DD1A4B24350C3400EAB3EF /* Number+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Number+Extensions.swift"; sourceTree = "<group>"; };
@@ -110,6 +109,7 @@
 		28DD1A5124350F4100EAB3EF /* BBMonth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBMonth.swift; sourceTree = "<group>"; };
 		28DEF5D4242845190052EF85 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		28DEF5D8242893C20052EF85 /* ExpenseDetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExpenseDetailTVC.swift; path = BetterBudget/Controllers/ExpenseDetailTVC.swift; sourceTree = SOURCE_ROOT; };
+		28E2E743244B9FDF00356326 /* Expense+CoreDateaProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+CoreDateaProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,7 +199,6 @@
 			isa = PBXGroup;
 			children = (
 				2813DA962427F60D00B0FC18 /* BetterBudget.xcdatamodeld */,
-				28B968662443AE6C0091D121 /* PaydayModel.swift */,
 				2811176A24355EC00031CC37 /* AddExpenseModel.swift */,
 				28DD1A4624350BCC00EAB3EF /* Extensions */,
 			);
@@ -211,15 +210,15 @@
 			children = (
 				283CB62424428FB90022314C /* Extensions */,
 				28754681243AD88D00887359 /* BBTabBarController.swift */,
-				2875467F243AD1B300887359 /* IncomeTVC.swift */,
 				288CB7AB24458C0A004756E2 /* RightDetailTVCell.swift */,
+				2875467F243AD1B300887359 /* IncomeTVC.swift */,
 				28754683243AE0B000887359 /* IncomeDetailTVC.swift */,
 				2813DAC52428001F00B0FC18 /* ExpensesTVC.swift */,
 				28DEF5D8242893C20052EF85 /* ExpenseDetailTVC.swift */,
 				286CB4B9243176B100F63053 /* ExpenseInteractionDelegate.swift */,
 				28754687243AEB5B00887359 /* IncomeInteractionDelegate.swift */,
 				2823ACE424425D3C0003F11A /* BudgetVC.swift */,
-				283CB6272442BB930022314C /* HeaderView.swift */,
+				287ACDB0244AB35C00626A73 /* BudgetTVCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -249,6 +248,7 @@
 				2842908C243749BB0034D1F3 /* CoreDataManager.swift */,
 				286CB4B72431525E00F63053 /* ExpenseProvider.swift */,
 				28754685243AE40C00887359 /* IncomeProvider.swift */,
+				28E2E743244B9FDF00356326 /* Expense+CoreDateaProperties.swift */,
 			);
 			path = DataProvider;
 			sourceTree = "<group>";
@@ -442,14 +442,14 @@
 				286CB4B224312F0700F63053 /* Schema.swift in Sources */,
 				28DD1A4A24350C2100EAB3EF /* DateFormatter+Extensions.swift in Sources */,
 				286CB4B42431336800F63053 /* CoreDataStack.swift in Sources */,
-				28B968672443AE6C0091D121 /* PaydayModel.swift in Sources */,
 				28754686243AE40C00887359 /* IncomeProvider.swift in Sources */,
 				2842908D243749BB0034D1F3 /* CoreDataManager.swift in Sources */,
 				286CB4B024312AB200F63053 /* CoreData+Convenience.swift in Sources */,
 				2813DA982427F60D00B0FC18 /* BetterBudget.xcdatamodeld in Sources */,
+				28E2E744244B9FDF00356326 /* Expense+CoreDateaProperties.swift in Sources */,
 				28754682243AD88D00887359 /* BBTabBarController.swift in Sources */,
 				287278C6242B157B00CA1717 /* UnusedCode.swift in Sources */,
-				283CB6282442BB930022314C /* HeaderView.swift in Sources */,
+				287ACDB1244AB35C00626A73 /* BudgetTVCell.swift in Sources */,
 				283CB62624428FD30022314C /* UIViewControllerExtensions.swift in Sources */,
 				288CB7AC24458C0A004756E2 /* RightDetailTVCell.swift in Sources */,
 				28B968632443A5450091D121 /* Extensions+Constraints.swift in Sources */,

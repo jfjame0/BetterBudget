@@ -51,6 +51,7 @@ class IncomeTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     }
     
     @objc func refreshControlValueChanged(sender: UIRefreshControl) {
+        tableView.reloadData()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
             sender.endRefreshing()
         })
@@ -233,7 +234,7 @@ extension IncomeTVC: IncomeInteractionDelegate {
         
         navigationItem.leftBarButtonItem?.isEnabled = (rowCount > 0) ? true : false
         
-        // Get the indexPath for the expense. Use the currently selected indexPath if any, or the first row otherwise.
+        // Get the indexPath for the income. Use the currently selected indexPath if any, or the first row otherwise.
         // indexPath will remain nil if the tableView has no data.
         var indexPath: IndexPath?
         if let income = income {

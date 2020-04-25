@@ -179,7 +179,7 @@ class ExpenseDetailTVC: UITableViewController, UITextFieldDelegate, UITextViewDe
         tableView = .init(frame: .zero, style: .insetGrouped)
         tableView.allowsSelection = false
         tableView.tableFooterView = UIView()
-        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        tableView.separatorStyle = .none
         tableView.keyboardDismissMode = .onDrag
         
         //TODO: - notesTextView Bug
