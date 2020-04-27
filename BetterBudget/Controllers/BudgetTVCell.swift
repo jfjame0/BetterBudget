@@ -12,8 +12,8 @@ class BudgetTVCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .value1, reuseIdentifier: reuseIdentifier)
-        textLabel?.text = "Expense Title"
-        detailTextLabel?.text = "- $ 150.00"
+//        textLabel?.text = "Expense Title"
+//        detailTextLabel?.text = "- $ 150.00"
     }
     
     required init?(coder: NSCoder) {

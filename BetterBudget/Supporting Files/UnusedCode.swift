@@ -566,6 +566,18 @@
  }
 
  
+     func generateDates(startDate: Date?, addByUnit:Calendar.Component, value: Int) -> [Date] {
+ 
+         var dates = [Date]()
+         var date = startDate!
+         let endDate = Calendar.current.date(byAdding: addByUnit, value: value, to: date)!
+         while date < endDate {
+             date = Calendar.current.date(byAdding: addByUnit, value: 1, to: date)!
+             dates.append(date)
+         }
+         return dates
+     }
+ 
  
  */
 
